@@ -462,7 +462,7 @@ button {
    ========================================================================== */
 .hero {
   padding: 0;
-  background-color: var(--color-white);
+  background-color: var(--color-gray-light);
   position: relative;
   overflow: hidden;
 }
@@ -805,131 +805,146 @@ button {
 }
 
 /* ==========================================================================
-   09. DREAM LIVING SPACES
+   09. DREAM LIVING SPACES (EXACT FIGMA REPLICA)
    ========================================================================== */
 .dream-spaces {
   background-color: var(--color-white);
+  padding: 100px 0;
 }
 
 .dream-spaces__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 70px;
+  grid-template-columns: 520px 1fr;
+  gap: 80px;
   align-items: center;
 }
 
-.dream-spaces__visual-composition {
+.dream-spaces__visual {
+  width: 100%;
+}
+
+.dream-spaces__composition {
   position: relative;
   width: 100%;
-  height: 480px;
+  max-width: 494px;
+  height: 640px;
 }
 
-.dream-spaces__box--back {
+/* Box 1 (Bottom Left, x=375, y=1963, w=342, h=527) */
+.dream-spaces__gray-block--bottom-left {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 342px;
+  height: 527px;
+  background-color: #C4C4C4;
+}
+
+/* Box 2 (Top Right, x=502, y=1862, w=366, h=561) */
+.dream-spaces__gray-block--top-right {
+  position: absolute;
+  left: 128px;
+  top: 11px;
+  width: 366px;
+  height: 561px;
+  background-color: #C4C4C4;
+}
+
+/* 5 Star Rating Badge (x=801, y=1851, w=120, h=120) */
+.dream-spaces__rating-badge {
   position: absolute;
   top: 0;
-  right: 0;
-  width: 75%;
-  height: 80%;
-  background-color: #BDBDBD;
-  border-radius: 4px;
-}
-
-.dream-spaces__box--main {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 80%;
-  height: 85%;
-  border-radius: 4px;
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-}
-
-.dream-spaces__badge {
-  position: absolute;
-  top: 25px;
-  right: 40px;
-  background-color: var(--color-navy-dark);
-  color: var(--color-white);
-  padding: 10px 18px;
-  border-radius: var(--radius-sm);
-  display: inline-flex;
+  right: -42px;
+  width: 120px;
+  height: 120px;
+  background-color: #071C1F;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 700;
+  justify-content: center;
+  gap: 10px;
   z-index: 10;
-  box-shadow: var(--shadow-sm);
 }
 
-.dream-spaces__badge-star {
-  color: var(--color-star-yellow);
-  font-size: 14px;
+.dream-spaces__star-icon {
+  width: 28px;
+  height: 28px;
 }
 
+.dream-spaces__rating-text {
+  color: var(--color-white);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+/* Right Content */
 .dream-spaces__title {
-  font-size: 40px;
+  font-size: 46px;
   font-weight: 800;
   color: var(--color-dark);
-  line-height: 1.2;
-  margin-bottom: 16px;
-  letter-spacing: -0.5px;
+  line-height: 1.18;
+  margin-bottom: 18px;
+  letter-spacing: -0.8px;
 }
 
 .dream-spaces__desc {
   font-size: 15px;
   color: var(--color-text-muted);
   line-height: 1.7;
-  margin-bottom: 35px;
+  max-width: 500px;
+  margin-bottom: 36px;
 }
 
 .dream-spaces__list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .feature-item {
   display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  padding: 18px 20px;
-  border-radius: var(--radius-md);
+  align-items: center;
+  gap: 24px;
+  padding: 16px 20px;
+  border-radius: 6px;
   transition: var(--transition-normal);
 }
 
-.feature-item:hover,
 .feature-item--highlighted {
-  background-color: var(--color-gray-light);
+  background-color: var(--color-white);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
+  padding: 24px 28px;
+  border-radius: 6px;
 }
 
-.feature-item__icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background-color: var(--color-white);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+.feature-item__icon-wrap {
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-.feature-item__icon svg {
-  width: 22px;
-  height: 22px;
+.feature-item__icon-wrap svg {
+  width: 36px;
+  height: 36px;
 }
 
 .feature-item__title {
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 700;
   color: var(--color-dark);
-  margin-bottom: 4px;
+  margin-bottom: 5px;
+  letter-spacing: -0.2px;
 }
 
 .feature-item__desc {
   font-size: 13.5px;
   color: var(--color-text-muted);
+  line-height: 1.5;
 }
 
 /* ==========================================================================
@@ -2067,8 +2082,21 @@ button {
     gap: 40px;
   }
 
-  .dream-spaces__visual-composition {
-    height: 380px;
+  .dream-spaces__composition {
+    max-width: 440px;
+    height: 520px;
+    margin: 0 auto;
+  }
+
+  .dream-spaces__gray-block--bottom-left {
+    width: 69%;
+    height: 82.5%;
+  }
+
+  .dream-spaces__gray-block--top-right {
+    left: 25.8%;
+    width: 74.2%;
+    height: 87.7%;
   }
 
   /* 3-card grids to 2-columns */
@@ -2138,6 +2166,32 @@ button {
     position: static;
     margin-top: 24px;
     width: 100%;
+  }
+
+  .dream-spaces__composition {
+    max-width: 320px;
+    height: 400px;
+    margin: 0 auto;
+  }
+
+  .dream-spaces__rating-badge {
+    width: 90px;
+    height: 90px;
+    right: -10px;
+    gap: 6px;
+  }
+
+  .dream-spaces__star-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .dream-spaces__rating-text {
+    font-size: 11px;
+  }
+
+  .dream-spaces__title {
+    font-size: 32px;
   }
 
   /* 1-column cards on mobile */
