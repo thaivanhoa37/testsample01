@@ -806,7 +806,7 @@
     <!-- ========================================================================= -->
     <!-- 11. WE BUILD MORE PROJECTS SUCCESSFUL (LOCATIONS & NEWSLETTER)            -->
     <!-- ========================================================================= -->
-    <section class="section projects">
+    <section class="section projects" id="projects">
       <div class="container">
         <div class="section-heading text-center">
           <h2 class="section-heading__title">We build more projects<br>successful</h2>
@@ -815,35 +815,35 @@
         <div class="projects__grid">
           <!-- Location Card 1 -->
           <div class="project-card">
-            <div class="project-card__bg">
-              <div class="placeholder-img placeholder-img--location"></div>
-            </div>
-            <div class="project-card__content">
-              <h3 class="project-card__title">San Francisco, California</h3>
-              <a href="#location" class="btn btn--project">See more &gt;</a>
-            </div>
+            <h3 class="project-card__title">San Francisco, California</h3>
+            <a href="#location" class="btn--project">
+              <span>See more</span>
+              <svg viewBox="0 0 8 12" width="7" height="11" fill="none">
+                <path d="M1.5 1.5L6 6L1.5 10.5" stroke="#FF5A3C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
           </div>
 
           <!-- Location Card 2 -->
           <div class="project-card">
-            <div class="project-card__bg">
-              <div class="placeholder-img placeholder-img--location"></div>
-            </div>
-            <div class="project-card__content">
-              <h3 class="project-card__title">Washington DC</h3>
-              <a href="#location" class="btn btn--project">See more &gt;</a>
-            </div>
+            <h3 class="project-card__title">Washington DC</h3>
+            <a href="#location" class="btn--project">
+              <span>See more</span>
+              <svg viewBox="0 0 8 12" width="7" height="11" fill="none">
+                <path d="M1.5 1.5L6 6L1.5 10.5" stroke="#FF5A3C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
           </div>
 
           <!-- Location Card 3 -->
           <div class="project-card">
-            <div class="project-card__bg">
-              <div class="placeholder-img placeholder-img--location"></div>
-            </div>
-            <div class="project-card__content">
-              <h3 class="project-card__title">Chicago</h3>
-              <a href="#location" class="btn btn--project">See more &gt;</a>
-            </div>
+            <h3 class="project-card__title">Chicago</h3>
+            <a href="#location" class="btn--project">
+              <span>See more</span>
+              <svg viewBox="0 0 8 12" width="7" height="11" fill="none">
+                <path d="M1.5 1.5L6 6L1.5 10.5" stroke="#FF5A3C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
           </div>
         </div>
 
@@ -851,13 +851,12 @@
         <div class="newsletter-bar">
           <form class="newsletter-bar__form" action="#" method="POST" onsubmit="event.preventDefault();">
             <div class="newsletter-bar__input-wrap">
-              <svg class="newsletter-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
+              <svg class="newsletter-bar__icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
               </svg>
               <input type="email" class="newsletter-bar__input" placeholder="Enter your email here" required>
             </div>
-            <button type="submit" class="btn btn--primary newsletter-bar__btn">Subscribe</button>
+            <button type="submit" class="newsletter-bar__btn">Subscribe</button>
           </form>
         </div>
       </div>
