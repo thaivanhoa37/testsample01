@@ -1392,7 +1392,8 @@ button {
   align-items: center;
   justify-content: center;
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
+  z-index: 20;
 }
 
 .unit-callout__bg-img {
