@@ -93,8 +93,10 @@
 
         <!-- Right Hero Visual Box -->
         <div class="hero__right">
-          <!-- Big Gray Architectural Placeholder Box -->
-          <div class="hero__gray-box"></div>
+          <!-- Big Architectural Visual Box -->
+          <div class="hero__gray-box">
+            <img src="./assets/images/hero-villa.jpg" alt="Modern luxury villa real estate" class="hero__img" loading="eager">
+          </div>
 
           <!-- Floating Overlapping Revenue Card -->
           <div class="hero__stat-card">
@@ -220,9 +222,13 @@
         <div class="dream-spaces__visual">
           <div class="dream-spaces__composition">
             <!-- Box 1 (Bottom Left, x=375, y=1963, w=342, h=527) -->
-            <div class="dream-spaces__gray-block dream-spaces__gray-block--bottom-left"></div>
+            <div class="dream-spaces__gray-block dream-spaces__gray-block--bottom-left">
+              <img src="./assets/images/dream-interior.jpg" alt="Modern luxury interior living room" class="dream-spaces__img" loading="lazy">
+            </div>
             <!-- Box 2 (Top Right, x=502, y=1862, w=366, h=561) -->
-            <div class="dream-spaces__gray-block dream-spaces__gray-block--top-right"></div>
+            <div class="dream-spaces__gray-block dream-spaces__gray-block--top-right">
+              <img src="./assets/images/dream-exterior.jpg" alt="Luxury townhouse modern architecture" class="dream-spaces__img" loading="lazy">
+            </div>
             <!-- Exact Figma 5 Star Rating Badge (x=801, y=1851, w=120, h=120) -->
             <div class="dream-spaces__rating-badge">
               <svg viewBox="844 1882 34 33" width="30" height="30" fill="none" class="dream-spaces__star-icon">
@@ -379,13 +385,13 @@
         <div class="today-sells__visual">
           <div class="mosaic-grid">
             <div class="mosaic-grid__item mosaic-grid__item--tall">
-              <div class="mosaic-grid__gray-box"></div>
+              <img src="./assets/images/mosaic-tall.jpg" alt="Luxury residential high-rise building" class="mosaic-grid__img" loading="lazy">
             </div>
             <div class="mosaic-grid__item mosaic-grid__item--top">
-              <div class="mosaic-grid__gray-box"></div>
+              <img src="./assets/images/mosaic-kitchen.jpg" alt="Contemporary luxury kitchen and dining" class="mosaic-grid__img" loading="lazy">
             </div>
             <div class="mosaic-grid__item mosaic-grid__item--bottom">
-              <div class="mosaic-grid__gray-box"></div>
+              <img src="./assets/images/mosaic-pool.jpg" alt="Modern villa swimming pool and outdoor lounge" class="mosaic-grid__img" loading="lazy">
             </div>
           </div>
         </div>
@@ -563,6 +569,7 @@
         <div class="property-grid">
           <!-- Property Card 1 (Featured / Active: orange price and orange arrow button) -->
           <article class="property-card property-card--featured">
+            <img src="./assets/images/property-1.jpg" alt="The Stokes Appartment" class="property-card__img" loading="lazy">
             <div class="property-card__info-box">
               <h3 class="property-card__title">The Stokes Appartment</h3>
               <p class="property-card__location">
@@ -586,6 +593,7 @@
 
           <!-- Property Card 2 -->
           <article class="property-card">
+            <img src="./assets/images/property-2.jpg" alt="The Stokes Appartment - Contemporary Villa" class="property-card__img" loading="lazy">
             <div class="property-card__info-box">
               <h3 class="property-card__title">The Stokes Appartment</h3>
               <p class="property-card__location">
@@ -609,6 +617,7 @@
 
           <!-- Property Card 3 -->
           <article class="property-card">
+            <img src="./assets/images/property-3.jpg" alt="The Stokes Appartment - Luxury Penthouse" class="property-card__img" loading="lazy">
             <div class="property-card__info-box">
               <h3 class="property-card__title">The Stokes Appartment</h3>
               <p class="property-card__location">
@@ -642,6 +651,8 @@
     <!-- 9. FLOATING CALLOUT WIDGET (UNIT NO. 9A & PRICE)                           -->
     <!-- ========================================================================= -->
     <section class="unit-callout-section">
+      <div class="unit-callout__bg-overlay"></div>
+      <img src="./assets/images/unit-banner.jpg" alt="Modern real estate community" class="unit-callout__bg-img" loading="lazy">
       <div class="container unit-callout__container">
         <!-- Floating Property Info Box -->
         <div class="unit-card">
@@ -726,9 +737,7 @@
             <div class="testimonial__visual">
               <div class="testimonial__accent-box"></div>
               <div class="testimonial__image-box">
-                <div class="placeholder-img placeholder-img--full">
-                  <span class="placeholder-img__text">Customer Photo</span>
-                </div>
+                <img src="./assets/images/customer-portrait.jpg" alt="Yunus Seyhan - Postgraduate Student" class="testimonial__img" loading="lazy">
               </div>
             </div>
 
@@ -779,38 +788,50 @@
         <div class="projects__grid">
           <!-- Location Card 1 -->
           <div class="project-card">
-            <h3 class="project-card__title">San Francisco, California</h3>
-            <a href="#location" class="btn--project">
-              <span>See more</span>
-              <svg viewBox="0 0 8 12" width="7" height="11" fill="none">
-                <path d="M1.5 1.5L6 6L1.5 10.5" stroke="#FF5A3C" stroke-width="1.8" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-            </a>
+            <img src="./assets/images/project-sf.jpg" alt="San Francisco, California" class="project-card__bg" loading="lazy">
+            <div class="project-card__overlay"></div>
+            <div class="project-card__content">
+              <h3 class="project-card__title">San Francisco, California</h3>
+              <a href="#location" class="btn--project">
+                <span>See more</span>
+                <svg viewBox="0 0 8 12" width="7" height="11" fill="none">
+                  <path d="M1.5 1.5L6 6L1.5 10.5" stroke="#FF5A3C" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </a>
+            </div>
           </div>
 
           <!-- Location Card 2 -->
           <div class="project-card">
-            <h3 class="project-card__title">Washington DC</h3>
-            <a href="#location" class="btn--project">
-              <span>See more</span>
-              <svg viewBox="0 0 8 12" width="7" height="11" fill="none">
-                <path d="M1.5 1.5L6 6L1.5 10.5" stroke="#FF5A3C" stroke-width="1.8" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-            </a>
+            <img src="./assets/images/project-dc.jpg" alt="Washington DC" class="project-card__bg" loading="lazy">
+            <div class="project-card__overlay"></div>
+            <div class="project-card__content">
+              <h3 class="project-card__title">Washington DC</h3>
+              <a href="#location" class="btn--project">
+                <span>See more</span>
+                <svg viewBox="0 0 8 12" width="7" height="11" fill="none">
+                  <path d="M1.5 1.5L6 6L1.5 10.5" stroke="#FF5A3C" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </a>
+            </div>
           </div>
 
           <!-- Location Card 3 -->
           <div class="project-card">
-            <h3 class="project-card__title">Chicago</h3>
-            <a href="#location" class="btn--project">
-              <span>See more</span>
-              <svg viewBox="0 0 8 12" width="7" height="11" fill="none">
-                <path d="M1.5 1.5L6 6L1.5 10.5" stroke="#FF5A3C" stroke-width="1.8" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-            </a>
+            <img src="./assets/images/project-chicago.jpg" alt="Chicago" class="project-card__bg" loading="lazy">
+            <div class="project-card__overlay"></div>
+            <div class="project-card__content">
+              <h3 class="project-card__title">Chicago</h3>
+              <a href="#location" class="btn--project">
+                <span>See more</span>
+                <svg viewBox="0 0 8 12" width="7" height="11" fill="none">
+                  <path d="M1.5 1.5L6 6L1.5 10.5" stroke="#FF5A3C" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -845,7 +866,9 @@
         <div class="blog__grid">
           <!-- Blog Card 1 (Featured with drop shadow) -->
           <article class="blog-card blog-card--featured">
-            <div class="blog-card__thumb"></div>
+            <div class="blog-card__thumb">
+              <img src="./assets/images/blog-1.jpg" alt="How to rent a home very easily" class="blog-card__img" loading="lazy">
+            </div>
             <div class="blog-card__body">
               <h3 class="blog-card__title">How to rent a home very easily?</h3>
               <div class="blog-card__category">
@@ -881,7 +904,9 @@
 
           <!-- Blog Card 2 -->
           <article class="blog-card">
-            <div class="blog-card__thumb"></div>
+            <div class="blog-card__thumb">
+              <img src="./assets/images/blog-2.jpg" alt="Interior design trends for modern homes" class="blog-card__img" loading="lazy">
+            </div>
             <div class="blog-card__body">
               <h3 class="blog-card__title">How to rent a home very easily?</h3>
               <div class="blog-card__category">
@@ -917,7 +942,9 @@
 
           <!-- Blog Card 3 -->
           <article class="blog-card">
-            <div class="blog-card__thumb"></div>
+            <div class="blog-card__thumb">
+              <img src="./assets/images/blog-3.jpg" alt="Smart real estate investment tips" class="blog-card__img" loading="lazy">
+            </div>
             <div class="blog-card__body">
               <h3 class="blog-card__title">How to rent a home very easily?</h3>
               <div class="blog-card__category">
@@ -948,6 +975,7 @@
                   <span>By <span class="author-highlight">Mike Hesson</span></span>
                 </span>
               </div>
+            </div>
           </article>
         </div>
 
@@ -1008,8 +1036,12 @@
 
             <!-- Stepped Graphic Composition Matching Exact Figma -->
             <div class="contact-section__graphic">
-              <div class="contact-graphic-box contact-graphic-box--top-left"></div>
-              <div class="contact-graphic-box contact-graphic-box--bottom-right"></div>
+              <div class="contact-graphic-box contact-graphic-box--top-left">
+                <img src="./assets/images/contact-graphic-1.jpg" alt="Real estate consultation office" class="contact-graphic__img" loading="lazy">
+              </div>
+              <div class="contact-graphic-box contact-graphic-box--bottom-right">
+                <img src="./assets/images/contact-graphic-2.jpg" alt="Modern dream home entrance" class="contact-graphic__img" loading="lazy">
+              </div>
               <div class="contact-graphic-box contact-graphic-box--orange"></div>
               <div class="contact-graphic-box contact-graphic-box--dark"></div>
             </div>
