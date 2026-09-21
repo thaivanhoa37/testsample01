@@ -1,7 +1,7 @@
 # Dependencies
 node_modules/
 
-# OS metadata
+# OS metadata,
 .DS_Store
 Thumbs.db
 desktop.ini
