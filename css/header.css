@@ -1,0 +1,302 @@
+/* ==========================================================================
+   REANTY REAL ESTATE - HEADER & NAVIGATION STYLESHEET
+   ========================================================================== */
+
+/* 1. TOP CONTACT BAR */
+.top-bar {
+  background-color: #171B2A;
+  color: #A6B2D3;
+  font-size: 13.5px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  z-index: 1001;
+}
+
+.top-bar__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-bar__contact {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.top-bar__link,
+.top-bar__location {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #A6B2D3;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.top-bar__link:hover {
+  color: #FFFFFF;
+}
+
+.top-bar .icon {
+  width: 15px;
+  height: 15px;
+  color: #FF5A3C;
+  flex-shrink: 0;
+}
+
+.top-bar__socials {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.top-bar__social-link {
+  width: 16px;
+  height: 16px;
+  color: #A6B2D3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.top-bar__social-link:hover {
+  color: #FF5A3C;
+  transform: translateY(-2px);
+}
+
+.top-bar__social-link svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* 2. MAIN NAVBAR */
+.navbar {
+  background-color: #FFFFFF;
+  padding: 18px 0;
+  position: relative;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+  text-decoration: none;
+}
+
+.navbar__brand svg {
+  display: block;
+  width: 155px;
+  height: 52px;
+}
+
+.navbar__nav {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.navbar__menu {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar__link {
+  font-size: 15px;
+  font-weight: 600;
+  color: #071C1F;
+  text-decoration: none;
+  position: relative;
+  padding: 6px 0;
+  transition: color 0.25s ease;
+}
+
+.navbar__link:hover {
+  color: #FF5A3C;
+}
+
+.navbar__link--active {
+  color: #FF5A3C;
+}
+
+.navbar__link--active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #FF5A3C;
+  border-radius: 2px;
+}
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.navbar__login {
+  font-size: 15px;
+  font-weight: 700;
+  color: #071C1F;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.navbar__login:hover {
+  color: #FF5A3C;
+}
+
+.navbar__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  background-color: #FF5A3C;
+  color: #FFFFFF;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(255, 90, 60, 0.35);
+  transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.navbar__btn:hover {
+  background-color: #E84D30;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 90, 60, 0.45);
+}
+
+/* Mobile Hamburger Button */
+.navbar__toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 32px;
+  height: 28px;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 1002;
+}
+
+.navbar__toggle span {
+  display: block;
+  height: 2.5px;
+  width: 100%;
+  background-color: #071C1F;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar__toggle--active span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+
+.navbar__toggle--active span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar__toggle--active span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* Responsive Header */
+@media (max-width: 992px) {
+  .navbar__toggle {
+    display: flex;
+  }
+
+  .navbar__nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #FFFFFF;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px 30px;
+    gap: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid #EAEAEA;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: visibility 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .navbar__nav--open {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .navbar__menu {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 16px;
+  }
+
+  .navbar__link {
+    display: block;
+    width: 100%;
+    padding: 8px 0;
+    font-size: 16px;
+  }
+
+  .navbar__actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #EAEAEA;
+  }
+
+  .navbar__login {
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .navbar__btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-bar {
+    display: none;
+  }
+
+  .navbar {
+    padding: 14px 0;
+  }
+
+  .navbar__brand svg {
+    width: 135px;
+    height: 44px;
+  }
+}
