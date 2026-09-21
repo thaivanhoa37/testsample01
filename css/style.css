@@ -1340,87 +1340,121 @@ button {
    13. UNIT CALLOUT & WIDGET
    ========================================================================== */
 .unit-callout-section {
-  padding: 50px 0;
-  background-color: var(--color-white);
+  width: 100%;
+  min-height: 460px;
+  background-color: #C4C4C4;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
 .unit-callout__container {
+  position: relative;
+  width: 100%;
+  height: 460px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 30px;
+  justify-content: center;
 }
 
 .unit-card {
+  width: 380px;
+  height: 150px;
+  background-color: var(--color-white);
+  border-radius: 20px;
+  padding: 20px;
   display: flex;
   align-items: center;
-  gap: 18px;
-  background-color: var(--color-white);
-  padding: 12px 20px;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(0, 0, 0, 0.04);
+  gap: 16px;
+  box-shadow: 0 14px 34px rgba(60, 80, 224, 0.1), 0 10px 25px rgba(0, 0, 0, 0.08);
+  position: relative;
+  z-index: 10;
 }
 
 .unit-card__thumb {
-  width: 80px;
-  height: 55px;
-  border-radius: 6px;
+  position: relative;
+  width: 110px;
+  height: 110px;
+  border-radius: 10px;
   overflow: hidden;
-  background-color: #627193;
+  flex-shrink: 0;
 }
 
-.placeholder-img--thumb {
+.unit-card__img {
+  width: 100%;
   height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.unit-card__thumb-badge {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
 }
 
 .unit-card__info {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-}
-
-.unit-card__price-row {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
+  justify-content: center;
+  gap: 2px;
+  flex-grow: 1;
 }
 
 .unit-card__price {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 800;
   color: var(--color-dark);
+  margin: 0;
+  line-height: 1.2;
 }
 
 .unit-card__address {
   font-size: 13px;
-  color: var(--color-text-muted);
+  font-weight: 500;
+  color: #8F9CA3;
+  margin: 0 0 6px 0;
+  line-height: 1.2;
 }
 
 .unit-card__specs {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+  margin-top: 2px;
 }
 
 .unit-spec {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-text-muted);
+  gap: 5px;
 }
 
 .unit-spec svg {
-  width: 15px;
-  height: 15px;
-  color: var(--color-primary);
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
 }
 
+.unit-spec__val {
+  font-size: 12px;
+  font-weight: 600;
+  color: #627193;
+}
+
+/* Orange Circular Badge UNIT NO. 9A */
 .unit-badge {
-  width: 90px;
-  height: 90px;
+  position: absolute;
+  bottom: -50px;
+  left: 45px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background-color: var(--color-primary);
   color: var(--color-white);
@@ -1428,18 +1462,19 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-primary);
-  margin-top: 10px;
+  box-shadow: 0 10px 25px rgba(255, 90, 60, 0.4);
+  z-index: 25;
 }
 
 .unit-badge__title {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.5px;
+  line-height: 1.2;
 }
 
 .unit-badge__number {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 800;
   line-height: 1;
 }
@@ -1455,8 +1490,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
-  max-width: 980px;
+  gap: 20px;
+  max-width: 1140px;
   margin: 0 auto;
 }
 
@@ -1530,29 +1565,39 @@ button {
 }
 
 .testimonial__nav-btn {
-  width: 44px;
-  height: 44px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  border: 1.5px solid var(--color-gray-border);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-dark);
   transition: var(--transition-normal);
   flex-shrink: 0;
+  cursor: pointer;
+  padding: 0;
 }
 
-.testimonial__nav-btn svg {
-  width: 18px;
-  height: 18px;
+.testimonial__nav-btn--prev {
+  background-color: var(--color-white);
+  border: 1.5px solid var(--color-primary);
 }
 
-.testimonial__nav-btn:hover,
+.testimonial__nav-btn--next,
 .testimonial__nav-btn.active {
   background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  color: var(--color-white);
-  box-shadow: 0 4px 15px rgba(255, 90, 60, 0.3);
+  border: 1.5px solid var(--color-primary);
+  box-shadow: 0 10px 25px rgba(255, 90, 60, 0.4);
+}
+
+.testimonial__nav-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  display: block;
+}
+
+.testimonial__nav-btn:hover {
+  transform: scale(1.06);
 }
 
 /* ==========================================================================
@@ -2201,12 +2246,35 @@ button {
 
   /* Testimonials */
   .testimonial__wrapper {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
   }
 
   .testimonial__card-grid {
     grid-template-columns: 1fr;
     text-align: center;
+    order: 1;
+    width: 100%;
+  }
+
+  .testimonial__nav-btn--prev {
+    order: 2;
+  }
+
+  .testimonial__nav-btn--next {
+    order: 3;
+  }
+
+  .testimonial__nav-btn {
+    width: 50px;
+    height: 50px;
+  }
+
+  .testimonial__nav-icon {
+    width: 22px;
+    height: 22px;
   }
 
   .testimonial__content {
@@ -2347,6 +2415,29 @@ button {
     gap: 16px;
     text-align: center;
   }
+  .unit-callout-section {
+    min-height: 400px;
+  }
+
+  .unit-callout__container {
+    height: 400px;
+    padding: 0 20px;
+  }
+
+  .unit-badge {
+    left: 20px;
+    bottom: -40px;
+    width: 90px;
+    height: 90px;
+  }
+
+  .unit-badge__title {
+    font-size: 10px;
+  }
+
+  .unit-badge__number {
+    font-size: 24px;
+  }
 }
 
 /* Very Small Smartphones (Max 480px) */
@@ -2369,7 +2460,16 @@ button {
   }
 
   .unit-card {
-    flex-direction: column;
-    align-items: flex-start;
+    width: 100%;
+    max-width: 330px;
+    height: auto;
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .unit-card__thumb {
+    width: 80px;
+    height: 80px;
   }
 }
+
