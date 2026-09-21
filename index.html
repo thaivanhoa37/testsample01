@@ -979,7 +979,6 @@
                   </svg>
                   <span>By <span class="author-highlight">Mike Hesson</span></span>
                 </span>
-              </div>
             </div>
           </article>
         </div>
@@ -994,74 +993,80 @@
     <!-- 13. CONTACT WITH US / LOOKING FOR TO BUY A PROPERTY?                      -->
     <!-- ========================================================================= -->
     <section class="section contact-section" id="contact">
-      <div class="container contact-section__grid">
-        <!-- Left: Information & Value Points -->
-        <div class="contact-section__info">
+      <div class="container">
+        <!-- Centered Section Heading Matching Figma -->
+        <div class="section-heading text-center">
           <span class="contact-section__subtag">Contact with us</span>
-          <h2 class="contact-section__title">Looking For To Buy A Property?</h2>
-          <p class="contact-section__desc">
-            Browse our property listing and find your best and suitable home or house for sale, rent and buying. It's so
-            easy and fast.
-          </p>
-
-          <ul class="contact-checklist">
-            <li class="contact-checklist__item">
-              <span class="contact-checklist__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#FF5A3C" stroke-width="3">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-              </span>
-              <span>Archit ecto beatae vitae dicta sunt</span>
-            </li>
-            <li class="contact-checklist__item">
-              <span class="contact-checklist__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#FF5A3C" stroke-width="3">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-              </span>
-              <span>Largest global RealEstate market</span>
-            </li>
-            <li class="contact-checklist__item">
-              <span class="contact-checklist__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#FF5A3C" stroke-width="3">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-              </span>
-              <span>Nor again is there anyone</span>
-            </li>
-          </ul>
-
-          <!-- Decorative Composition Graphic -->
-          <div class="contact-section__graphic">
-            <div class="contact-graphic-box contact-graphic-box--accent"></div>
-            <div class="contact-graphic-box contact-graphic-box--main"></div>
-          </div>
+          <h2 class="section-heading__title">Looking For To Buy A Property?</h2>
         </div>
 
-        <!-- Right: Contact Form Card -->
-        <div class="contact-section__form-card">
-          <h3 class="contact-form__title">Contact Us</h3>
+        <div class="contact-section__grid">
+          <!-- Left: Information, Checklist & Stepped Composition Graphic -->
+          <div class="contact-section__info">
+            <p class="contact-section__desc">
+              Browse our property listing and find your best<br>and suitable home or house for sale, rent and<br>buying. It's so easy and fast.
+            </p>
 
-          <!-- Contact Form with Placeholder API Data Handler -->
-          <form class="contact-form" action="#" method="POST" onsubmit="event.preventDefault();">
-            <div class="form-group">
-              <label for="contactName" class="form-label">Name</label>
-              <input type="text" id="contactName" class="form-control" placeholder="Enter your name" required>
+            <ul class="contact-checklist">
+              <li class="contact-checklist__item">
+                <span class="contact-checklist__icon">
+                  <svg viewBox="0 0 16 16" width="16" height="16" fill="none">
+                    <path d="M3 8.5L6.5 12L13 4" stroke="#FF5A3C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span>Archit ecto beatae vitae dicta sunt</span>
+              </li>
+              <li class="contact-checklist__item">
+                <span class="contact-checklist__icon">
+                  <svg viewBox="0 0 16 16" width="16" height="16" fill="none">
+                    <path d="M3 8.5L6.5 12L13 4" stroke="#FF5A3C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span>Largest global RealEstate market</span>
+              </li>
+              <li class="contact-checklist__item">
+                <span class="contact-checklist__icon">
+                  <svg viewBox="0 0 16 16" width="16" height="16" fill="none">
+                    <path d="M3 8.5L6.5 12L13 4" stroke="#FF5A3C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span>Nor again is there anyone</span>
+              </li>
+            </ul>
+
+            <!-- Stepped Graphic Composition Matching Exact Figma -->
+            <div class="contact-section__graphic">
+              <div class="contact-graphic-box contact-graphic-box--top-left"></div>
+              <div class="contact-graphic-box contact-graphic-box--bottom-right"></div>
+              <div class="contact-graphic-box contact-graphic-box--orange"></div>
+              <div class="contact-graphic-box contact-graphic-box--dark"></div>
             </div>
+          </div>
 
-            <div class="form-group">
-              <label for="contactEmail" class="form-label">Email</label>
-              <input type="email" id="contactEmail" class="form-control" placeholder="Enter your email" required>
-            </div>
+          <!-- Right: Contact Form Card -->
+          <div class="contact-section__form-card">
+            <h3 class="contact-form__title">Contact Us</h3>
 
-            <div class="form-group">
-              <label for="contactMessage" class="form-label">Message</label>
-              <textarea id="contactMessage" class="form-control form-control--textarea" rows="4"
-                placeholder="Enter your message" required></textarea>
-            </div>
+            <form class="contact-form" action="#" method="POST" onsubmit="event.preventDefault();">
+              <div class="form-group">
+                <label for="contactName" class="form-label">Name</label>
+                <input type="text" id="contactName" class="form-control" placeholder="Enter your name" required>
+              </div>
 
-            <button type="submit" class="btn btn--primary btn--block">Send</button>
-          </form>
+              <div class="form-group">
+                <label for="contactEmail" class="form-label">Email</label>
+                <input type="email" id="contactEmail" class="form-control" placeholder="Enter your email" required>
+              </div>
+
+              <div class="form-group">
+                <label for="contactMessage" class="form-label">Message</label>
+                <textarea id="contactMessage" class="form-control form-control--textarea" rows="4"
+                  placeholder="Enter your message" required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn--primary contact-form__btn">Send</button>
+            </form>
+          </div>
         </div>
       </div>
     </section>
