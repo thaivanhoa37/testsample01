@@ -594,40 +594,35 @@
       <div class="container">
         <!-- Header with Filter Tabs on right -->
         <div class="featured-property__header">
-          <div class="section-heading">
-            <h2 class="section-heading__title">Featured Property</h2>
-            <p class="section-heading__subtitle">
-              Find your suitable house here and stay safe and relax with pleasure
+          <div>
+            <h2 class="featured-property__title">Featured Property</h2>
+            <p class="featured-property__subtitle">
+              Find your suitable house here and stay safe and<br>relaxe with pleasure
             </p>
           </div>
           <div class="featured-property__tabs">
-            <button class="filter-tab filter-tab--active">Appartment</button>
-            <button class="filter-tab">Vila</button>
-            <button class="filter-tab">Land</button>
+            <span class="filter-tab filter-tab--active">Appartment</span>
+            <span class="filter-tab">Vila</span>
+            <span class="filter-tab">Land</span>
           </div>
         </div>
 
-        <!-- 3 Property Cards Grid -->
+        <!-- 3 Property Cards Grid Matching Exact Figma -->
         <div class="property-grid">
-          <!-- Property Card 1 -->
-          <article class="property-card">
-            <div class="property-card__image-wrap">
-              <div class="placeholder-img placeholder-img--property">
-                <span class="placeholder-img__text">Appartment 1</span>
-              </div>
-            </div>
-            <div class="property-card__body">
+          <!-- Property Card 1 (Featured / Active: orange price and orange arrow button) -->
+          <article class="property-card property-card--featured">
+            <div class="property-card__info-box">
               <h3 class="property-card__title">The Stokes Appartment</h3>
               <p class="property-card__location">
-                <svg class="icon-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                   <circle cx="12" cy="10" r="3" />
                 </svg>
                 <span>Cleveland, United States</span>
               </p>
-              <div class="property-card__footer">
-                <span class="property-card__price">$2,32,120</span>
-                <a href="#details" class="property-card__action" aria-label="View Property Details">
+              <div class="property-card__bottom-row">
+                <span class="property-card__price property-card__price--highlight">$2,32,120</span>
+                <a href="#details" class="property-card__btn property-card__btn--active" aria-label="View Details">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
@@ -639,23 +634,18 @@
 
           <!-- Property Card 2 -->
           <article class="property-card">
-            <div class="property-card__image-wrap">
-              <div class="placeholder-img placeholder-img--property">
-                <span class="placeholder-img__text">Appartment 2</span>
-              </div>
-            </div>
-            <div class="property-card__body">
+            <div class="property-card__info-box">
               <h3 class="property-card__title">The Stokes Appartment</h3>
               <p class="property-card__location">
-                <svg class="icon-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                   <circle cx="12" cy="10" r="3" />
                 </svg>
                 <span>Cleveland, United States</span>
               </p>
-              <div class="property-card__footer">
+              <div class="property-card__bottom-row">
                 <span class="property-card__price">$2,32,120</span>
-                <a href="#details" class="property-card__action" aria-label="View Property Details">
+                <a href="#details" class="property-card__btn" aria-label="View Details">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
@@ -667,23 +657,18 @@
 
           <!-- Property Card 3 -->
           <article class="property-card">
-            <div class="property-card__image-wrap">
-              <div class="placeholder-img placeholder-img--property">
-                <span class="placeholder-img__text">Appartment 3</span>
-              </div>
-            </div>
-            <div class="property-card__body">
+            <div class="property-card__info-box">
               <h3 class="property-card__title">The Stokes Appartment</h3>
               <p class="property-card__location">
-                <svg class="icon-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                   <circle cx="12" cy="10" r="3" />
                 </svg>
                 <span>Cleveland, United States</span>
               </p>
-              <div class="property-card__footer">
+              <div class="property-card__bottom-row">
                 <span class="property-card__price">$2,32,120</span>
-                <a href="#details" class="property-card__action" aria-label="View Property Details">
+                <a href="#details" class="property-card__btn" aria-label="View Details">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>
@@ -694,8 +679,9 @@
           </article>
         </div>
 
-        <div class="text-center mt-40">
-          <a href="#all-properties" class="btn btn--outline">Explore Property</a>
+        <!-- Centered Explore Property Button -->
+        <div class="featured-property__footer">
+          <a href="#all-properties" class="btn btn--explore">Explore Property</a>
         </div>
       </div>
     </section>

@@ -1149,35 +1149,52 @@ button {
 /* ==========================================================================
    12. FEATURED PROPERTY
    ========================================================================== */
+.featured-property {
+  background-color: var(--color-white);
+  padding: 100px 0 80px;
+}
+
 .featured-property__header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 45px;
+  margin-bottom: 50px;
 }
 
-.featured-property__header .section-heading {
-  margin-bottom: 0;
+.featured-property__title {
+  font-size: 46px;
+  font-weight: 800;
+  color: var(--color-dark);
+  line-height: 1.18;
+  margin-bottom: 16px;
+  letter-spacing: -0.8px;
+}
+
+.featured-property__subtitle {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
 }
 
 .featured-property__tabs {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 36px;
 }
 
 .filter-tab {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--color-text-muted);
   position: relative;
-  padding-bottom: 6px;
+  padding-bottom: 8px;
   transition: var(--transition-normal);
+  cursor: pointer;
 }
 
 .filter-tab:hover,
 .filter-tab--active {
-  color: var(--color-primary);
+  color: var(--color-dark);
 }
 
 .filter-tab--active::after {
@@ -1186,7 +1203,7 @@ button {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 2px;
+  height: 2.5px;
   background-color: var(--color-primary);
   border-radius: 2px;
 }
@@ -1194,91 +1211,127 @@ button {
 .property-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  gap: 32px;
+  margin-bottom: 50px;
 }
 
 .property-card {
-  background-color: var(--color-white);
-  border-radius: var(--radius-sm);
+  position: relative;
+  width: 100%;
+  height: 386px;
+  background-color: #C4C4C4;
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(0, 0, 0, 0.05);
   transition: var(--transition-normal);
 }
 
+.property-card--featured {
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.09);
+}
+
 .property-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.08);
 }
 
-.property-card__image-wrap {
-  width: 100%;
-  height: 220px;
-  background-color: var(--color-gray-placeholder);
-}
-
-.placeholder-img--property {
-  height: 100%;
-}
-
-.property-card__body {
-  padding: 24px;
+/* White Info Box overlapping bottom-left (w=270, h=138) */
+.property-card__info-box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 74%;
+  height: 138px;
+  background-color: var(--color-white);
+  padding: 20px 0 0 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .property-card__title {
-  font-size: 18px;
+  font-size: 16.5px;
   font-weight: 700;
   color: var(--color-dark);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  letter-spacing: -0.2px;
 }
 
 .property-card__location {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13.5px;
+  font-size: 12.5px;
   color: var(--color-text-muted);
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
-.property-card__location .icon-pin {
-  width: 15px;
-  height: 15px;
-  color: var(--color-primary);
+.property-card__location svg {
+  width: 13px;
+  height: 13px;
+  stroke: var(--color-text-muted);
 }
 
-.property-card__footer {
+.property-card__bottom-row {
+  margin-top: auto;
   display: flex;
+  align-items: flex-end;
   justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid var(--color-gray-border);
-  padding-top: 16px;
 }
 
 .property-card__price {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
+  color: var(--color-dark);
+  padding-bottom: 12px;
+}
+
+.property-card__price--highlight {
   color: var(--color-primary);
 }
 
-.property-card__action {
-  width: 36px;
-  height: 36px;
-  background-color: var(--color-gray-light);
-  border-radius: var(--radius-sm);
+/* 72x44px Arrow button at bottom right corner */
+.property-card__btn {
+  width: 72px;
+  height: 44px;
+  background-color: #C4C4C4;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-dark);
   transition: var(--transition-normal);
+  color: var(--color-dark);
 }
 
-.property-card__action svg {
+.property-card__btn--active {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.property-card__btn svg {
   width: 18px;
   height: 18px;
 }
 
-.property-card:hover .property-card__action {
+.property-card__btn:hover {
+  background-color: var(--color-primary-hover);
+  color: var(--color-white);
+}
+
+/* Explore Property Outline Button */
+.featured-property__footer {
+  display: flex;
+  justify-content: center;
+}
+
+.btn--explore {
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary);
+  background-color: transparent;
+  font-size: 14.5px;
+  font-weight: 600;
+  padding: 14px 42px;
+  border-radius: 4px;
+  transition: var(--transition-normal);
+}
+
+.btn--explore:hover {
   background-color: var(--color-primary);
   color: var(--color-white);
 }
@@ -2234,6 +2287,11 @@ button {
   .projects__grid,
   .blog__grid {
     grid-template-columns: 1fr;
+  }
+
+  .property-card {
+    max-width: 368px;
+    margin: 0 auto;
   }
 
   .today-sells__stepped-wrapper {
