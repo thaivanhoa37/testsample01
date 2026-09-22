@@ -1061,14 +1061,45 @@ function initFormValidation() {
 }
 
 /**
- * 6. CHUYỂN ĐỔI TAB BẬC THANG (STEPPED TABS: HOUSE 1, 2, 3)
+ * 6. CHUYỂN ĐỔI TAB BẬC THANG (STEPPED TABS: HOUSE 1, 2, 3) & ĐỔI HÌNH ẢNH HERO VILLA
+ * - Bấm vào House 1, 2, 3 hoặc các số 1, 2, 3
+ * - Chuyển đổi tab bậc thang, thanh tiến trình
+ * - Chuyển đổi hình ảnh biệt thự tương ứng trong khung xám (Fade transition mượt mà)
+ * - Cập nhật thẻ số liệu Revenue ($7454.21, $9120.50, $8345.80)
  */
 function initHeroInteractions() {
   const tabs = document.querySelectorAll('#heroHouseTabs .hero__tab-step');
   const nums = document.querySelectorAll('#heroProgressNums span');
   const fill = document.getElementById('heroProgressFill');
+  const heroImg = document.getElementById('heroVillaImg') || document.querySelector('.hero__gray-box .hero__img');
+  const statValue = document.querySelector('.hero__stat-value');
 
   if (!tabs.length || !nums.length || !fill) return;
+
+  // Dữ liệu hình ảnh và số liệu tương ứng cho từng House
+  const houseData = [
+    {
+      img: './assets/images/hero-villa.jpg',
+      alt: 'House 1 - Modern Luxury Villa with Infinity Pool',
+      revenue: '$7454.21'
+    },
+    {
+      img: './assets/images/hero-villa-2.jpg',
+      alt: 'House 2 - Contemporary Glass Mansion with Sunset Reflection',
+      revenue: '$9120.50'
+    },
+    {
+      img: './assets/images/hero-villa-3.jpg',
+      alt: 'House 3 - Ultra Luxury Architectural Hillside Residence',
+      revenue: '$8345.80'
+    }
+  ];
+
+  // Preload hình ảnh để chuyển tức thì không bị giật lag
+  houseData.forEach((item) => {
+    const preloader = new Image();
+    preloader.src = item.img;
+  });
 
   function setActiveStep(index) {
     tabs.forEach((tab, i) => {
@@ -1090,6 +1121,29 @@ function initHeroInteractions() {
     // Track width is 63px, fill width is 23px. Max translation is 40px (at index 2).
     const shift = index * 20;
     fill.style.transform = `translateX(${shift}px)`;
+
+    // Chuyển đổi hình ảnh với hiệu ứng mờ dần nhẹ nhàng
+    if (heroImg && houseData[index]) {
+      const target = houseData[index];
+      heroImg.classList.add('hero__img--fade');
+      setTimeout(() => {
+        heroImg.src = target.img;
+        heroImg.alt = target.alt;
+        heroImg.classList.remove('hero__img--fade');
+      }, 200);
+    }
+
+    // Cập nhật số liệu Revenue tương ứng
+    if (statValue && houseData[index]) {
+      statValue.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+      statValue.style.opacity = '0.3';
+      statValue.style.transform = 'translateY(-3px)';
+      setTimeout(() => {
+        statValue.textContent = houseData[index].revenue;
+        statValue.style.opacity = '1';
+        statValue.style.transform = 'translateY(0)';
+      }, 200);
+    }
   }
 
   tabs.forEach((tab, index) => {

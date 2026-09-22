@@ -666,10 +666,16 @@ button {
   object-fit: cover;
   object-position: center;
   display: block;
-  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  opacity: 1;
+  transition: opacity 0.35s ease, transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.hero__right:hover .hero__img {
+.hero__img--fade {
+  opacity: 0.15;
+  transform: scale(1.04);
+}
+
+.hero__right:hover .hero__img:not(.hero__img--fade) {
   transform: scale(1.02);
 }
 
