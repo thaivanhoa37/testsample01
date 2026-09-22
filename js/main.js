@@ -239,8 +239,60 @@ const FALLBACK_FOOTER = `<footer class="footer">
 </footer>`;
 
 /* ==========================================================================
-   APP INITIALIZATION
+   APP INITIALIZATION & CLIENT-SIDE AUTH STATE
    ========================================================================== */
+
+/**
+ * Cập nhật trạng thái hiển thị trên thanh Header Navbar dựa trên phiên đăng nhập
+ * Hoạt động 100% Client-Side (không cần backend server), hoàn hảo cho Vercel.
+ */
+function updateNavbarAuthState() {
+  let session = null;
+  try {
+    const raw = localStorage.getItem('reanty_session');
+    if (raw) session = JSON.parse(raw);
+  } catch (e) {
+    session = null;
+  }
+
+  const actionContainers = document.querySelectorAll('.navbar__actions');
+  actionContainers.forEach((container) => {
+    if (session && session.loggedIn) {
+      const initial = (session.name || 'U').charAt(0).toUpperCase();
+      container.innerHTML = `
+        <div class="navbar__user-profile">
+          <span class="navbar__user-avatar" title="${session.email || ''}">${initial}</span>
+          <span class="navbar__user-name">${session.name || 'User'}</span>
+          <button type="button" class="navbar__logout-btn" id="navbarLogoutBtn" aria-label="Đăng xuất">Log Out</button>
+        </div>
+      `;
+
+      const logoutBtn = container.querySelector('#navbarLogoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          try {
+            localStorage.removeItem('reanty_session');
+          } catch (err) {}
+          showToast('Bạn đã đăng xuất tài khoản thành công.', 'success');
+          updateNavbarAuthState();
+        });
+      }
+    } else {
+      const isSubpage =
+        window.location.pathname.includes('/pages/') ||
+        window.location.pathname.includes('\\pages\\');
+      const loginHref = isSubpage ? './login.html' : './pages/login.html';
+      const registerHref = isSubpage ? './register.html' : './pages/register.html';
+
+      container.innerHTML = `
+        <a href="${loginHref}" class="navbar__login" data-login-link>Log In</a>
+        <a href="${registerHref}" class="btn btn--primary navbar__btn" data-signup-link>Sign Up</a>
+      `;
+    }
+  });
+}
+
 function initApp() {
   loadComponents();
   initStickyHeader();
@@ -250,6 +302,7 @@ function initApp() {
   initFormValidation();
   initHeroInteractions();
   initVideoModal();
+  updateNavbarAuthState();
 }
 
 if (document.readyState === 'loading') {
@@ -343,6 +396,7 @@ async function loadComponents() {
   initNavigation();
   initStickyHeader();
   initFormValidation();
+  updateNavbarAuthState();
 }
 
 /**
@@ -646,6 +700,33 @@ function initFormValidation() {
 
       if (!isValid) return;
 
+      // Kiểm tra hoặc cấp quyền đăng nhập client-side từ localStorage
+      let currentUserName = emailInput.value.trim().split('@')[0];
+      try {
+        const users = JSON.parse(localStorage.getItem('reanty_users') || '[]');
+        const emailVal = emailInput.value.trim().toLowerCase();
+        const foundUser = users.find((u) => u.email.toLowerCase() === emailVal);
+        if (foundUser) {
+          if (foundUser.password !== passwordInput.value) {
+            showFieldError(passwordInput, 'Mật khẩu không chính xác. Vui lòng thử lại.');
+            return;
+          }
+          currentUserName = foundUser.name;
+        }
+        // Lưu phiên đăng nhập client-side
+        localStorage.setItem(
+          'reanty_session',
+          JSON.stringify({
+            name: currentUserName,
+            email: emailInput.value.trim(),
+            loggedIn: true,
+            loginTime: new Date().toISOString()
+          })
+        );
+      } catch (err) {
+        console.warn('localStorage session failed', err);
+      }
+
       if (loginSuccessAlert) {
         loginSuccessAlert.style.display = 'flex';
       }
@@ -655,7 +736,7 @@ function initFormValidation() {
         submitBtn.style.opacity = '0.7';
         submitBtn.innerHTML = `<span>Đang đăng nhập...</span>`;
       }
-      showToast('Đăng nhập thành công! Đang chuyển hướng...', 'success');
+      showToast(`Đăng nhập thành công! Xin chào ${currentUserName}`, 'success');
 
       setTimeout(() => {
         const isSubpage =
@@ -742,6 +823,27 @@ function initFormValidation() {
 
       if (registerErrorAlert) registerErrorAlert.style.display = 'none';
       if (registerSuccessAlert) registerSuccessAlert.style.display = 'flex';
+
+      // Lưu tài khoản mới vào localStorage (Client-side, không cần backend server)
+      try {
+        let users = JSON.parse(localStorage.getItem('reanty_users') || '[]');
+        const emailVal = emailInput.value.trim().toLowerCase();
+        const existingIdx = users.findIndex((u) => u.email.toLowerCase() === emailVal);
+        const userData = {
+          name: nameInput.value.trim(),
+          email: emailVal,
+          password: passInput.value,
+          registeredAt: new Date().toISOString()
+        };
+        if (existingIdx >= 0) {
+          users[existingIdx] = userData;
+        } else {
+          users.push(userData);
+        }
+        localStorage.setItem('reanty_users', JSON.stringify(users));
+      } catch (err) {
+        console.warn('localStorage error', err);
+      }
 
       const submitBtn = registerForm.querySelector('.auth-submit-btn');
       if (submitBtn) {
