@@ -454,24 +454,29 @@ button {
 
 .hero__container {
   display: grid;
-  grid-template-columns: 570px 1fr;
-  align-items: stretch;
-  min-height: 700px;
+  grid-template-columns: 573px 867px;
+  align-items: start;
+  min-height: 850px;
   position: relative;
+  overflow: visible;
 }
 
 .hero__left {
-  padding: 60px 30px 60px 0;
+  padding: 65px 20px 0 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  z-index: 5;
+  justify-content: flex-start;
+  min-height: 850px;
+  position: relative;
+  z-index: 10;
+  overflow: visible;
 }
 
 .hero__title-block {
   position: relative;
-  display: inline-block;
+  margin-top: 60px;
   margin-bottom: 24px;
+  overflow: visible;
 }
 
 .hero__title {
@@ -486,32 +491,34 @@ button {
   color: var(--color-dark);
 }
 
-/* Exact Figma Curved Arrow positioned right by 'country .' pointing to gray box */
+/* Exact Figma Curved Arrow positioned under 'your' / 'country .' pointing 37px into gray box */
 .hero__curve-arrow {
   position: absolute;
-  bottom: -22px;
-  right: 15px;
-  width: 165px;
+  top: 110px;
+  left: 382px;
+  width: 228px;
   height: auto;
   pointer-events: none;
-  z-index: 10;
+  z-index: 25;
 }
 
 .hero__desc {
   font-size: 15.5px;
-  color: var(--color-text-muted);
-  line-height: 1.7;
-  max-width: 440px;
+  color: #9EABB2;
+  line-height: 1.65;
+  max-width: 395px;
   margin-bottom: 36px;
 }
 
 .hero__cta {
-  margin-bottom: 65px;
+  margin-bottom: 50px;
 }
 
 .hero__btn {
-  padding: 16px 36px;
-  gap: 10px;
+  width: 210px;
+  height: 58px;
+  padding: 0;
+  gap: 12px;
   border-radius: 10px;
   font-size: 15px;
   font-weight: 700;
@@ -520,6 +527,8 @@ button {
   box-shadow: 0 8px 24px rgba(255, 90, 60, 0.35);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  transition: var(--transition-normal);
 }
 
 .hero__btn:hover {
@@ -529,28 +538,30 @@ button {
 }
 
 .hero__btn .icon-arrow {
-  width: 16px;
-  height: 16px;
-  stroke-width: 3;
+  width: 7px;
+  height: 12px;
 }
 
-/* Stepped House Tabs matching Figma (HOUSE 1 tall, HOUSE 2 & 3 lower) */
+/* Stepped House Tabs matching Figma (HOUSE 1 tall 80px/114px, HOUSE 2 & 3 60px/88px) */
 .hero__stepped-wrapper {
+  margin-top: auto;
+  padding-bottom: 33px;
   display: flex;
   align-items: flex-end;
-  gap: 28px;
+  gap: 20px;
 }
 
 .hero__stepped-tabs {
   display: flex;
   align-items: flex-end;
+  gap: 0;
 }
 
 .hero__tab-step {
-  padding: 0 20px;
-  height: 55px;
-  background-color: #B5B5B5;
-  color: rgba(255, 255, 255, 0.85);
+  width: 88px;
+  height: 60px;
+  background-color: #B8BABC;
+  color: rgba(255, 255, 255, 0.9);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.6px;
@@ -558,49 +569,65 @@ button {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: var(--transition-normal);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  user-select: none;
 }
 
 .hero__tab-step--active {
-  height: 75px;
-  background-color: #999999;
+  width: 114px;
+  height: 80px;
+  background-color: #9D9D9D;
   color: var(--color-white);
 }
 
-.hero__tab-step:hover {
-  background-color: #8C8C8C;
+.hero__tab-step:hover:not(.hero__tab-step--active) {
+  background-color: #ABABAB;
   color: var(--color-white);
 }
 
 .hero__stepped-progress {
   display: flex;
   align-items: center;
-  gap: 18px;
-  padding-bottom: 16px;
+  gap: 14px;
+  padding-bottom: 24px;
 }
 
 .hero__stepped-line {
-  width: 55px;
-  height: 2.5px;
-  background-color: #E0E0E0;
+  width: 63px;
+  height: 2px;
+  background-color: #EBEBEB;
   position: relative;
   border-radius: 2px;
 }
 
 .hero__stepped-line-fill {
-  width: 22px;
+  width: 23px;
   height: 100%;
   background-color: var(--color-dark);
   border-radius: 2px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .hero__stepped-numbers {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-size: 13.5px;
   font-weight: 700;
-  color: #B5B5B5;
+  color: #9EABB2;
+  user-select: none;
+}
+
+.hero__stepped-numbers span {
+  cursor: pointer;
+  transition: color 0.3s ease, font-size 0.3s ease;
+}
+
+.hero__stepped-numbers span:hover {
+  color: var(--color-dark);
 }
 
 .hero__stepped-numbers .active {
@@ -611,9 +638,9 @@ button {
 /* Hero Right: Big Architectural Gray Rectangle */
 .hero__right {
   position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 680px;
+  width: 867px;
+  height: 704px;
+  align-self: start;
 }
 
 .hero__gray-box {
@@ -630,32 +657,41 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
-  transition: transform 0.6s ease;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .hero__right:hover .hero__img {
   transform: scale(1.02);
 }
 
-/* Floating Overlapping Revenue Card (Positioned at bottom-left corner of gray box) */
+/* Floating Overlapping Revenue Card (Extends 48.5px left of gray box, hangs 39px below) */
 .hero__stat-card {
   position: absolute;
-  bottom: 40px;
-  left: -120px;
+  bottom: -39px;
+  left: -48.5px;
   background-color: var(--color-white);
-  padding: 24px 30px;
+  padding: 24px 28px;
   border-radius: 20px;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+  box-shadow: 10px 14px 59px rgba(0, 0, 92, 0.07);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
   z-index: 20;
-  width: 230px;
+  width: 240px;
+  height: 190px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero__stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 10px 20px 65px rgba(0, 0, 92, 0.12);
 }
 
 .hero__stat-icon {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   line-height: 0;
 }
 
@@ -669,7 +705,7 @@ button {
 }
 
 .hero__stat-label {
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 500;
   color: #9EABB2;
 }
@@ -679,41 +715,46 @@ button {
   position: absolute;
   bottom: 0;
   right: 0;
+  width: 198px;
+  height: 74px;
   background-color: var(--color-primary);
   color: var(--color-white);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 14px;
-  padding: 18px 32px;
+  border-top-left-radius: 10px;
+  box-shadow: 8px 9px 24px rgba(0, 0, 92, 0.08);
   font-size: 14.5px;
   font-weight: 700;
-  border-top-left-radius: 10px;
   transition: var(--transition-normal);
   z-index: 15;
 }
 
 .hero__video-btn:hover {
   background-color: var(--color-primary-hover);
-  padding-right: 36px;
+  box-shadow: 8px 12px 30px rgba(255, 90, 60, 0.35);
+}
+
+.hero__video-btn:hover .hero__play-circle {
+  transform: scale(1.08);
 }
 
 .hero__play-circle {
-  width: 28px;
-  height: 28px;
+  width: 37px;
+  height: 37px;
   border-radius: 50%;
-  background-color: var(--color-white);
-  color: var(--color-primary);
+  background-color: #FCFCFD;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 12px rgba(98, 113, 147, 0.1);
+  transition: transform 0.3s ease;
 }
 
 .hero__play-circle svg {
   width: 12px;
   height: 12px;
-  margin-left: 2px;
-  fill: var(--color-primary);
 }
 
 /* ==========================================================================
@@ -2412,8 +2453,28 @@ button {
 
 /* Laptop & Small Desktop (Max 1200px) */
 @media (max-width: 1200px) {
+  .hero__container {
+    grid-template-columns: 480px 1fr;
+    min-height: 750px;
+  }
+
+  .hero__left {
+    min-height: 750px;
+    padding-top: 40px;
+  }
+
+  .hero__right {
+    width: 100%;
+    height: 600px;
+  }
+
   .hero__title {
     font-size: 46px;
+  }
+
+  .hero__curve-arrow {
+    left: 310px;
+    width: 180px;
   }
 
   .footer__grid {
@@ -2474,14 +2535,18 @@ button {
   /* Hero Section Tablet */
   .hero__container {
     grid-template-columns: 1fr;
+    min-height: auto;
   }
 
   .hero__left {
     padding: 50px 24px 40px;
+    min-height: auto;
   }
 
   .hero__right {
+    width: 100%;
     min-height: 480px;
+    height: 480px;
   }
 
   .hero__stat-card {
@@ -2628,6 +2693,7 @@ button {
 
   .hero__right {
     min-height: 380px;
+    height: 380px;
   }
 
   .hero__stat-card {

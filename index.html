@@ -43,7 +43,7 @@
             </h1>
 
             <!-- Exact Figma Vector Curved Loop Arrow pointing towards gray box -->
-            <svg class="hero__curve-arrow" viewBox="622 473 230 125" fill="none" aria-hidden="true">
+            <svg class="hero__curve-arrow" viewBox="622 472.5 228.5 123" fill="none" aria-hidden="true">
               <path
                 d="M747.215 589.318C748.452 589.027 749.561 589.238 750.709 589.662C760.287 593.202 770.171 594.905 780.407 594.757C792.529 594.583 804.464 593.456 816.022 589.416C822.087 587.298 828.049 584.983 833.763 582.052C834.414 581.719 835.113 581 835.842 581.525C836.775 582.195 836.026 583.113 835.84 583.896C835.362 585.896 834.69 587.855 834.332 589.875C834.062 591.397 835.082 593.047 836.186 593.322C837.697 593.702 838.291 592.54 838.961 591.56C839.267 591.115 839.568 590.659 839.832 590.188C842.803 584.897 845.746 579.591 848.746 574.313C849.865 572.337 850.043 570.399 848.708 568.515C847.401 566.667 845.499 566.54 843.444 566.915C836.278 568.211 829.105 569.47 821.934 570.763C820.974 570.936 820.013 571.169 819.105 571.51C818.157 571.867 817.343 572.493 817.41 573.645C817.478 574.826 818.392 575.271 819.402 575.449C820.36 575.619 821.35 575.614 822.313 575.767C823.341 575.924 824.462 575.608 825.466 576.295C824.986 577.385 823.958 577.507 823.107 577.88C811.527 582.957 799.383 585.655 786.781 586.284C778.949 586.675 771.129 586.675 763.445 584.771C762.777 584.603 761.845 584.767 761.679 583.56C764.894 581.414 768.005 579.067 770.947 576.491C787.817 561.718 785.869 537.064 771.246 524.555C768.184 521.936 765.064 519.37 761.486 517.546C752.149 512.794 742.301 511.741 732.425 515.364C713.689 522.243 709.755 544.295 714.346 556.762C717.807 566.172 724.161 573.49 732.073 579.537C733.336 580.503 734.846 581.166 736.007 582.532C735.207 583.193 734.646 583.171 734.115 583.195C726.123 583.543 718.245 582.779 710.585 580.464C693.371 575.256 678.133 566.432 664.625 554.725C655.73 547.019 648.42 537.824 641.906 528.066C633.436 515.359 627.616 501.594 626.006 486.269C625.616 482.571 625.503 478.904 627.662 475.593C628.076 474.96 628.708 474.266 627.913 473.609C627.058 472.904 626.285 473.521 625.623 474.119C624.88 474.787 624.428 475.651 624.005 476.536C623.008 478.626 622.54 480.844 622.464 483.135C622.115 493.698 624.172 503.861 628.338 513.5C637.62 534.957 651.214 553.273 669.819 567.592C683.088 577.808 697.674 585.653 714.264 589.217C725.218 591.573 736.223 591.918 747.215 589.318ZM747.343 579.032C738.104 574.351 730.088 568.336 724.309 559.542C718.08 550.064 718.967 536.186 726.622 527.905C730.91 523.266 736.359 521.026 742.561 520.848C749.339 520.655 755.693 522.215 761.236 526.373C765.603 529.65 769.66 533.186 772.166 538.171C773.247 540.322 773.907 542.591 774.173 544.587C776.024 554.381 773.603 562.515 766.723 569.293C762.588 573.366 757.954 576.7 752.632 579.073C750.838 579.875 749.172 579.955 747.343 579.032Z"
                 fill="#FF5A3C" />
@@ -57,22 +57,23 @@
           <div class="hero__cta">
             <a href="#services" class="btn btn--primary hero__btn">
               <span>Start membership</span>
-              <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <polyline points="9 18 15 12 9 6"></polyline>
+              <svg class="icon-arrow" viewBox="0 0 7 12" fill="none" stroke="#FFFAFB" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 1L6 6L1 11" />
               </svg>
             </a>
           </div>
 
           <!-- Bottom Stepped Tabs Block (HOUSE 1, HOUSE 2, HOUSE 3) -->
           <div class="hero__stepped-wrapper">
-            <div class="hero__stepped-tabs">
-              <div class="hero__tab-step hero__tab-step--active">
+            <div class="hero__stepped-tabs" id="heroHouseTabs">
+              <div class="hero__tab-step hero__tab-step--active" data-house="1">
                 <span>HOUSE 1</span>
               </div>
-              <div class="hero__tab-step">
+              <div class="hero__tab-step" data-house="2">
                 <span>HOUSE 2</span>
               </div>
-              <div class="hero__tab-step">
+              <div class="hero__tab-step" data-house="3">
                 <span>HOUSE 3</span>
               </div>
             </div>
@@ -80,12 +81,12 @@
             <!-- Stepped bar & pagination -->
             <div class="hero__stepped-progress">
               <div class="hero__stepped-line">
-                <div class="hero__stepped-line-fill"></div>
+                <div class="hero__stepped-line-fill" id="heroProgressFill"></div>
               </div>
-              <div class="hero__stepped-numbers">
-                <span class="active">1</span>
-                <span>2</span>
-                <span>3</span>
+              <div class="hero__stepped-numbers" id="heroProgressNums">
+                <span class="active" data-num="1">1</span>
+                <span data-num="2">2</span>
+                <span data-num="3">3</span>
               </div>
             </div>
           </div>
@@ -95,7 +96,8 @@
         <div class="hero__right">
           <!-- Big Architectural Visual Box -->
           <div class="hero__gray-box">
-            <img src="./assets/images/hero-villa.jpg" alt="Modern luxury villa real estate" class="hero__img" loading="eager">
+            <img src="./assets/images/hero-villa.jpg" alt="Modern luxury villa real estate" class="hero__img"
+              loading="eager">
           </div>
 
           <!-- Floating Overlapping Revenue Card -->
@@ -133,11 +135,13 @@
           </div>
 
           <!-- "How it works" Button at Bottom-Right of Gray Box -->
-          <a href="#how-it-works" class="hero__video-btn">
+          <a href="#how-it-works" class="hero__video-btn" aria-label="How it works video demonstration">
             <span>How it works</span>
             <span class="hero__play-circle">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <polygon points="8 5 19 12 8 19 8 5" />
+              <svg viewBox="0 0 10 12" fill="none">
+                <path
+                  d="M9 5.13397C9.66667 5.51887 9.66667 6.48113 9 6.86603L1.5 11.1962C0.833333 11.5811 0 11.0999 0 10.3301L0 1.66987C0 0.900072 0.833333 0.418947 1.5 0.803848L9 5.13397Z"
+                  fill="#FF5A3C" />
               </svg>
             </span>
           </a>
@@ -223,11 +227,13 @@
           <div class="dream-spaces__composition">
             <!-- Box 1 (Bottom Left, x=375, y=1963, w=342, h=527) -->
             <div class="dream-spaces__gray-block dream-spaces__gray-block--bottom-left">
-              <img src="./assets/images/dream-interior.jpg" alt="Modern luxury interior living room" class="dream-spaces__img" loading="lazy">
+              <img src="./assets/images/dream-interior.jpg" alt="Modern luxury interior living room"
+                class="dream-spaces__img" loading="lazy">
             </div>
             <!-- Box 2 (Top Right, x=502, y=1862, w=366, h=561) -->
             <div class="dream-spaces__gray-block dream-spaces__gray-block--top-right">
-              <img src="./assets/images/dream-exterior.jpg" alt="Luxury townhouse modern architecture" class="dream-spaces__img" loading="lazy">
+              <img src="./assets/images/dream-exterior.jpg" alt="Luxury townhouse modern architecture"
+                class="dream-spaces__img" loading="lazy">
             </div>
             <!-- Exact Figma 5 Star Rating Badge (x=801, y=1851, w=120, h=120) -->
             <div class="dream-spaces__rating-badge">
@@ -385,13 +391,16 @@
         <div class="today-sells__visual">
           <div class="mosaic-grid">
             <div class="mosaic-grid__item mosaic-grid__item--tall">
-              <img src="./assets/images/mosaic-tall.jpg" alt="Luxury residential high-rise building" class="mosaic-grid__img" loading="lazy">
+              <img src="./assets/images/mosaic-tall.jpg" alt="Luxury residential high-rise building"
+                class="mosaic-grid__img" loading="lazy">
             </div>
             <div class="mosaic-grid__item mosaic-grid__item--top">
-              <img src="./assets/images/mosaic-kitchen.jpg" alt="Contemporary luxury kitchen and dining" class="mosaic-grid__img" loading="lazy">
+              <img src="./assets/images/mosaic-kitchen.jpg" alt="Contemporary luxury kitchen and dining"
+                class="mosaic-grid__img" loading="lazy">
             </div>
             <div class="mosaic-grid__item mosaic-grid__item--bottom">
-              <img src="./assets/images/mosaic-pool.jpg" alt="Modern villa swimming pool and outdoor lounge" class="mosaic-grid__img" loading="lazy">
+              <img src="./assets/images/mosaic-pool.jpg" alt="Modern villa swimming pool and outdoor lounge"
+                class="mosaic-grid__img" loading="lazy">
             </div>
           </div>
         </div>
@@ -569,7 +578,8 @@
         <div class="property-grid">
           <!-- Property Card 1 (Featured / Active: orange price and orange arrow button) -->
           <article class="property-card property-card--featured">
-            <img src="./assets/images/property-1.jpg" alt="The Stokes Appartment" class="property-card__img" loading="lazy">
+            <img src="./assets/images/property-1.jpg" alt="The Stokes Appartment" class="property-card__img"
+              loading="lazy">
             <div class="property-card__info-box">
               <h3 class="property-card__title">The Stokes Appartment</h3>
               <p class="property-card__location">
@@ -593,7 +603,8 @@
 
           <!-- Property Card 2 -->
           <article class="property-card">
-            <img src="./assets/images/property-2.jpg" alt="The Stokes Appartment - Contemporary Villa" class="property-card__img" loading="lazy">
+            <img src="./assets/images/property-2.jpg" alt="The Stokes Appartment - Contemporary Villa"
+              class="property-card__img" loading="lazy">
             <div class="property-card__info-box">
               <h3 class="property-card__title">The Stokes Appartment</h3>
               <p class="property-card__location">
@@ -617,7 +628,8 @@
 
           <!-- Property Card 3 -->
           <article class="property-card">
-            <img src="./assets/images/property-3.jpg" alt="The Stokes Appartment - Luxury Penthouse" class="property-card__img" loading="lazy">
+            <img src="./assets/images/property-3.jpg" alt="The Stokes Appartment - Luxury Penthouse"
+              class="property-card__img" loading="lazy">
             <div class="property-card__info-box">
               <h3 class="property-card__title">The Stokes Appartment</h3>
               <p class="property-card__location">
@@ -652,7 +664,8 @@
     <!-- ========================================================================= -->
     <section class="unit-callout-section">
       <div class="unit-callout__bg-overlay"></div>
-      <img src="./assets/images/unit-banner.jpg" alt="Modern real estate community" class="unit-callout__bg-img" loading="lazy">
+      <img src="./assets/images/unit-banner.jpg" alt="Modern real estate community" class="unit-callout__bg-img"
+        loading="lazy">
       <div class="container unit-callout__container">
         <!-- Floating Property Info Box -->
         <div class="unit-card">
@@ -737,7 +750,8 @@
             <div class="testimonial__visual">
               <div class="testimonial__accent-box"></div>
               <div class="testimonial__image-box">
-                <img src="./assets/images/customer-portrait.jpg" alt="Yunus Seyhan - Postgraduate Student" class="testimonial__img" loading="lazy">
+                <img src="./assets/images/customer-portrait.jpg" alt="Yunus Seyhan - Postgraduate Student"
+                  class="testimonial__img" loading="lazy">
               </div>
             </div>
 
@@ -788,7 +802,8 @@
         <div class="projects__grid">
           <!-- Location Card 1 -->
           <div class="project-card">
-            <img src="./assets/images/project-sf.jpg" alt="San Francisco, California" class="project-card__bg" loading="lazy">
+            <img src="./assets/images/project-sf.jpg" alt="San Francisco, California" class="project-card__bg"
+              loading="lazy">
             <div class="project-card__overlay"></div>
             <div class="project-card__content">
               <h3 class="project-card__title">San Francisco, California</h3>
@@ -867,7 +882,8 @@
           <!-- Blog Card 1 (Featured with drop shadow) -->
           <article class="blog-card blog-card--featured">
             <div class="blog-card__thumb">
-              <img src="./assets/images/blog-1.jpg" alt="How to rent a home very easily" class="blog-card__img" loading="lazy">
+              <img src="./assets/images/blog-1.jpg" alt="How to rent a home very easily" class="blog-card__img"
+                loading="lazy">
             </div>
             <div class="blog-card__body">
               <h3 class="blog-card__title">How to rent a home very easily?</h3>
@@ -905,7 +921,8 @@
           <!-- Blog Card 2 -->
           <article class="blog-card">
             <div class="blog-card__thumb">
-              <img src="./assets/images/blog-2.jpg" alt="Interior design trends for modern homes" class="blog-card__img" loading="lazy">
+              <img src="./assets/images/blog-2.jpg" alt="Interior design trends for modern homes" class="blog-card__img"
+                loading="lazy">
             </div>
             <div class="blog-card__body">
               <h3 class="blog-card__title">How to rent a home very easily?</h3>
@@ -943,7 +960,8 @@
           <!-- Blog Card 3 -->
           <article class="blog-card">
             <div class="blog-card__thumb">
-              <img src="./assets/images/blog-3.jpg" alt="Smart real estate investment tips" class="blog-card__img" loading="lazy">
+              <img src="./assets/images/blog-3.jpg" alt="Smart real estate investment tips" class="blog-card__img"
+                loading="lazy">
             </div>
             <div class="blog-card__body">
               <h3 class="blog-card__title">How to rent a home very easily?</h3>
@@ -1037,10 +1055,12 @@
             <!-- Stepped Graphic Composition Matching Exact Figma -->
             <div class="contact-section__graphic">
               <div class="contact-graphic-box contact-graphic-box--top-left">
-                <img src="./assets/images/contact-graphic-1.jpg" alt="Real estate consultation office" class="contact-graphic__img" loading="lazy">
+                <img src="./assets/images/contact-graphic-1.jpg" alt="Real estate consultation office"
+                  class="contact-graphic__img" loading="lazy">
               </div>
               <div class="contact-graphic-box contact-graphic-box--bottom-right">
-                <img src="./assets/images/contact-graphic-2.jpg" alt="Modern dream home entrance" class="contact-graphic__img" loading="lazy">
+                <img src="./assets/images/contact-graphic-2.jpg" alt="Modern dream home entrance"
+                  class="contact-graphic__img" loading="lazy">
               </div>
               <div class="contact-graphic-box contact-graphic-box--orange"></div>
               <div class="contact-graphic-box contact-graphic-box--dark"></div>

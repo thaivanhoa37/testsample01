@@ -247,6 +247,7 @@ function initApp() {
   initLoginForm();
   initRegisterForm();
   initOtherForms();
+  initHeroInteractions();
 }
 
 if (document.readyState === 'loading') {
@@ -552,6 +553,51 @@ function initOtherForms() {
           form.reset();
         }, 2000);
       }
+    });
+  });
+}
+
+/**
+ * Xử lý tương tác Stepped Tabs & Pagination (HOUSE 1, HOUSE 2, HOUSE 3) trong Hero Section
+ */
+function initHeroInteractions() {
+  const tabs = document.querySelectorAll('#heroHouseTabs .hero__tab-step');
+  const nums = document.querySelectorAll('#heroProgressNums span');
+  const fill = document.getElementById('heroProgressFill');
+
+  if (!tabs.length || !nums.length || !fill) return;
+
+  function setActiveStep(index) {
+    tabs.forEach((tab, i) => {
+      if (i === index) {
+        tab.classList.add('hero__tab-step--active');
+      } else {
+        tab.classList.remove('hero__tab-step--active');
+      }
+    });
+
+    nums.forEach((num, i) => {
+      if (i === index) {
+        num.classList.add('active');
+      } else {
+        num.classList.remove('active');
+      }
+    });
+
+    // Track width is 63px, fill width is 23px. Max translation is 40px (at index 2).
+    const shift = index * 20;
+    fill.style.transform = `translateX(${shift}px)`;
+  }
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => {
+      setActiveStep(index);
+    });
+  });
+
+  nums.forEach((num, index) => {
+    num.addEventListener('click', () => {
+      setActiveStep(index);
     });
   });
 }
