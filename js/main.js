@@ -298,6 +298,7 @@ function initApp() {
   initStickyHeader();
   initBackToTop();
   initNavigation();
+  initNavHighlight();
   initPasswordToggles();
   initFormValidation();
   initHeroInteractions();
@@ -395,6 +396,7 @@ async function loadComponents() {
 
   // Tái khởi tạo các tương tác phụ thuộc vào Header và Footer đã load
   initNavigation();
+  initNavHighlight();
   initStickyHeader();
   initFormValidation();
   updateNavbarAuthState();
@@ -467,6 +469,117 @@ function initNavigation() {
       closeMenu();
     }
   });
+}
+
+/**
+ * 1B. QUẢN LÝ NỔI BẬT MENU KHI CLICK (NAVBAR ACTIVE HIGHLIGHT & SCROLLSPY)
+ * - Khi click vào bất kỳ mục nào (Home, About, Feature, Market, Services, Contact):
+ *   Mục đó lập tức được làm nổi bật màu cam (#FF5A3C), in đậm và hiện thanh gạch chân cam.
+ * - Tự động cuộn trang mượt mà (smooth scroll) đến đúng phần nội dung tương ứng.
+ * - Tự động đồng bộ mục đang xem theo vị trí cuộn trang (ScrollSpy).
+ */
+function initNavHighlight() {
+  const menuLinks = document.querySelectorAll('.navbar__menu .navbar__link');
+  if (!menuLinks.length) return;
+
+  const isSubpage =
+    window.location.pathname.includes('/pages/') ||
+    window.location.pathname.includes('\\pages\\');
+
+  function setActiveLink(targetLink) {
+    menuLinks.forEach((link) => {
+      link.classList.remove('navbar__link--active');
+      link.removeAttribute('aria-current');
+    });
+    if (targetLink) {
+      targetLink.classList.add('navbar__link--active');
+      targetLink.setAttribute('aria-current', 'page');
+    }
+  }
+
+  // Gán sự kiện click cho từng mục trong menu
+  menuLinks.forEach((link) => {
+    if (link.dataset.highlightBound === 'true') return;
+    link.dataset.highlightBound = 'true';
+
+    link.addEventListener('click', (e) => {
+      // Làm nổi bật mục được click ngay lập tức
+      setActiveLink(link);
+
+      const href = link.getAttribute('href') || '';
+
+      // Trường hợp click vào link có hash (#section) ở trang chủ
+      if (!isSubpage && href.includes('#')) {
+        const hash = href.split('#')[1];
+        const targetSection = document.getElementById(hash);
+        if (targetSection) {
+          e.preventDefault();
+          const navEl = document.querySelector('.navbar');
+          const navHeight = navEl ? navEl.offsetHeight : 70;
+          const targetTop = targetSection.getBoundingClientRect().top + window.pageYOffset - navHeight + 2;
+
+          window.scrollTo({
+            top: targetTop,
+            behavior: 'smooth'
+          });
+
+          if (history.pushState) {
+            history.pushState(null, '', `#${hash}`);
+          }
+        }
+      } else if (!isSubpage && (href === './index.html' || href === 'index.html' || href === '#home')) {
+        // Trường hợp click vào Home
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+        if (history.pushState) {
+          history.pushState(null, '', window.location.pathname);
+        }
+      }
+    });
+  });
+
+  // Kích hoạt tính năng tự động đổi highlight theo vị trí cuộn trang (ScrollSpy)
+  if (!isSubpage) {
+    const sectionIds = ['home', 'feature', 'about', 'market', 'services', 'contact'];
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el) => el !== null);
+
+    let scrollTick = false;
+    window.addEventListener('scroll', () => {
+      if (!scrollTick) {
+        window.requestAnimationFrame(() => {
+          const navEl = document.querySelector('.navbar');
+          const navHeight = navEl ? navEl.offsetHeight : 70;
+          const scrollPosition = window.scrollY + navHeight + 120;
+
+          let currentId = 'home';
+          sections.forEach((sec) => {
+            if (sec.offsetTop <= scrollPosition) {
+              currentId = sec.id;
+            }
+          });
+
+          // Cập nhật mục tương ứng trong navbar
+          menuLinks.forEach((link) => {
+            const href = link.getAttribute('href') || '';
+            const matchesHome = currentId === 'home' && (href === './index.html' || href.endsWith('/index.html') || href === '#home' || !href.includes('#'));
+            const matchesOther = currentId !== 'home' && href.includes(`#${currentId}`);
+
+            if (matchesHome || matchesOther) {
+              setActiveLink(link);
+            }
+          });
+
+          scrollTick = false;
+        });
+        scrollTick = true;
+      }
+    }, { passive: true });
+  }
 }
 
 /**
