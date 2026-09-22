@@ -618,6 +618,10 @@ button {
   transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+.hero__stepped-line-fill--orange {
+  background-color: var(--color-primary, #FF5A3C) !important;
+}
+
 .hero__stepped-numbers {
   display: flex;
   align-items: center;
@@ -1122,10 +1126,16 @@ button {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.4s ease;
+  opacity: 1;
+  transition: opacity 0.35s ease, transform 0.4s ease;
 }
 
-.mosaic-grid__item:hover .mosaic-grid__img {
+.mosaic-grid__img--fade {
+  opacity: 0.2;
+  transform: scale(1.03);
+}
+
+.mosaic-grid__item:hover .mosaic-grid__img:not(.mosaic-grid__img--fade) {
   transform: scale(1.05);
 }
 

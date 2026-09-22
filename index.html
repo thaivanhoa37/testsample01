@@ -361,14 +361,14 @@
 
           <!-- Tabs and Stepped Pagination Matching Exact Figma -->
           <div class="today-sells__stepped-wrapper">
-            <div class="hero__stepped-tabs">
-              <div class="hero__tab-step hero__tab-step--active">
+            <div class="hero__stepped-tabs" id="todayHouseTabs">
+              <div class="hero__tab-step hero__tab-step--active" data-today-house="1">
                 <span>HOUSE 1</span>
               </div>
-              <div class="hero__tab-step">
+              <div class="hero__tab-step" data-today-house="2">
                 <span>HOUSE 2</span>
               </div>
-              <div class="hero__tab-step">
+              <div class="hero__tab-step" data-today-house="3">
                 <span>HOUSE 3</span>
               </div>
             </div>
@@ -376,12 +376,12 @@
             <!-- Stepped bar & pagination with orange fill -->
             <div class="hero__stepped-progress">
               <div class="hero__stepped-line">
-                <div class="hero__stepped-line-fill hero__stepped-line-fill--orange"></div>
+                <div class="hero__stepped-line-fill hero__stepped-line-fill--orange" id="todayProgressFill"></div>
               </div>
-              <div class="hero__stepped-numbers">
-                <span class="active">1</span>
-                <span>2</span>
-                <span>3</span>
+              <div class="hero__stepped-numbers" id="todayProgressNums">
+                <span class="active" data-num="1">1</span>
+                <span data-num="2">2</span>
+                <span data-num="3">3</span>
               </div>
             </div>
           </div>
@@ -392,15 +392,15 @@
           <div class="mosaic-grid">
             <div class="mosaic-grid__item mosaic-grid__item--tall">
               <img src="./assets/images/mosaic-tall.jpg" alt="Luxury residential high-rise building"
-                class="mosaic-grid__img" loading="lazy">
+                class="mosaic-grid__img" id="todayMosaicTall" loading="lazy">
             </div>
             <div class="mosaic-grid__item mosaic-grid__item--top">
               <img src="./assets/images/mosaic-kitchen.jpg" alt="Contemporary luxury kitchen and dining"
-                class="mosaic-grid__img" loading="lazy">
+                class="mosaic-grid__img" id="todayMosaicTop" loading="lazy">
             </div>
             <div class="mosaic-grid__item mosaic-grid__item--bottom">
               <img src="./assets/images/mosaic-pool.jpg" alt="Modern villa swimming pool and outdoor lounge"
-                class="mosaic-grid__img" loading="lazy">
+                class="mosaic-grid__img" id="todayMosaicBottom" loading="lazy">
             </div>
           </div>
         </div>

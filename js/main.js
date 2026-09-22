@@ -302,6 +302,7 @@ function initApp() {
   initPasswordToggles();
   initFormValidation();
   initHeroInteractions();
+  initTodaySellsInteractions();
   initVideoModal();
   initTestimonialSlider();
   updateNavbarAuthState();
@@ -1155,6 +1156,118 @@ function initHeroInteractions() {
   nums.forEach((num, index) => {
     num.addEventListener('click', () => {
       setActiveStep(index);
+    });
+  });
+}
+
+/**
+ * 6B. CHUYỂN ĐỔI TAB BẬC THANG & HÌNH ẢNH MOSAIC CHO "TODAY SELLS PROPERTIES"
+ * - Bấm vào House 1, 2, 3 hoặc số 1, 2, 3 ở section Today Sells
+ * - Chuyển đổi tab bậc thang, thanh tiến trình màu cam
+ * - Chuyển đổi bộ 3 hình ảnh kiến trúc Mosaic tương ứng (Tall, Top, Bottom)
+ */
+function initTodaySellsInteractions() {
+  const tabs = document.querySelectorAll('#todayHouseTabs .hero__tab-step');
+  const nums = document.querySelectorAll('#todayProgressNums span');
+  const fill = document.getElementById('todayProgressFill');
+  const imgTall = document.getElementById('todayMosaicTall');
+  const imgTop = document.getElementById('todayMosaicTop');
+  const imgBottom = document.getElementById('todayMosaicBottom');
+
+  if (!tabs.length || !nums.length || !fill) return;
+
+  // Dữ liệu 3 bộ ảnh cho từng House trong Today Sells
+  const todayHouseData = [
+    {
+      tall: './assets/images/mosaic-tall.jpg',
+      top: './assets/images/mosaic-kitchen.jpg',
+      bottom: './assets/images/mosaic-pool.jpg',
+      altTall: 'Luxury residential high-rise building',
+      altTop: 'Contemporary luxury kitchen and dining',
+      altBottom: 'Modern villa swimming pool and outdoor lounge'
+    },
+    {
+      tall: './assets/images/mosaic-tall-2.jpg',
+      top: './assets/images/mosaic-top-2.jpg',
+      bottom: './assets/images/mosaic-bottom-2.jpg',
+      altTall: 'Contemporary glass townhouse architecture',
+      altTop: 'Spacious modern luxury master suite',
+      altBottom: 'Designer architectural open living room'
+    },
+    {
+      tall: './assets/images/mosaic-tall-3.jpg',
+      top: './assets/images/mosaic-top-3.jpg',
+      bottom: './assets/images/mosaic-bottom-3.jpg',
+      altTall: 'Modern luxury architectural villa at sunset',
+      altTop: 'Minimalist private courtyard terrace',
+      altBottom: 'Waterfront infinity deck with panoramic view'
+    }
+  ];
+
+  // Preload toàn bộ ảnh của Today Sells
+  todayHouseData.forEach((house) => {
+    [house.tall, house.top, house.bottom].forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  });
+
+  function setTodayStep(index) {
+    // 1. Cập nhật tabs
+    tabs.forEach((tab, i) => {
+      if (i === index) {
+        tab.classList.add('hero__tab-step--active');
+      } else {
+        tab.classList.remove('hero__tab-step--active');
+      }
+    });
+
+    // 2. Cập nhật numbers
+    nums.forEach((num, i) => {
+      if (i === index) {
+        num.classList.add('active');
+      } else {
+        num.classList.remove('active');
+      }
+    });
+
+    // 3. Dịch chuyển thanh fill cam
+    const shift = index * 20;
+    fill.style.transform = `translateX(${shift}px)`;
+
+    // 4. Chuyển đổi bộ 3 ảnh mosaic với hiệu ứng fade
+    const target = todayHouseData[index];
+    if (!target) return;
+
+    const mosaicImgs = [imgTall, imgTop, imgBottom].filter(Boolean);
+    mosaicImgs.forEach((img) => img.classList.add('mosaic-grid__img--fade'));
+
+    setTimeout(() => {
+      if (imgTall) {
+        imgTall.src = target.tall;
+        imgTall.alt = target.altTall;
+      }
+      if (imgTop) {
+        imgTop.src = target.top;
+        imgTop.alt = target.altTop;
+      }
+      if (imgBottom) {
+        imgBottom.src = target.bottom;
+        imgBottom.alt = target.altBottom;
+      }
+      mosaicImgs.forEach((img) => img.classList.remove('mosaic-grid__img--fade'));
+    }, 200);
+  }
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => {
+      setTodayStep(index);
+    });
+  });
+
+  nums.forEach((num, index) => {
+    num.addEventListener('click', () => {
+      setTodayStep(index);
     });
   });
 }
