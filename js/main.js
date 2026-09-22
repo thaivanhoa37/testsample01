@@ -302,6 +302,7 @@ function initApp() {
   initFormValidation();
   initHeroInteractions();
   initVideoModal();
+  initTestimonialSlider();
   updateNavbarAuthState();
 }
 
@@ -1064,3 +1065,162 @@ function initVideoModal() {
     trigger.addEventListener('click', openVideoModal);
   });
 }
+
+/**
+ * 8. TESTIMONIAL SLIDER INTERACTION
+ * - Hỗ trợ nút Chuyển slide Tiếp theo (Next) & Quay lại (Prev)
+ * - Chuyển đổi trơn tru bằng CSS transform translateX
+ * - Hỗ trợ bấm Dots phân trang
+ * - Hỗ trợ phím mũi tên bàn phím & cử chỉ vuốt (Touch Swipe)
+ * - Tự động quay vòng (Loop Carousel) và tự chạy chu kỳ 6s (tạm dừng khi hover)
+ */
+function initTestimonialSlider() {
+  const slider = document.getElementById('testimonialSlider');
+  const track = document.getElementById('testimonialTrack');
+  const prevBtn = document.getElementById('testimonialPrevBtn');
+  const nextBtn = document.getElementById('testimonialNextBtn');
+  const dotsContainer = document.getElementById('testimonialDots');
+
+  if (!slider || !track || !prevBtn || !nextBtn) return;
+
+  const slides = track.querySelectorAll('.testimonial__slide');
+  const totalSlides = slides.length;
+  if (totalSlides <= 1) return;
+
+  let currentIndex = 0;
+  let isTransitioning = false;
+  let autoPlayTimer = null;
+
+  const dots = dotsContainer ? dotsContainer.querySelectorAll('.testimonial__dot') : [];
+
+  function goToSlide(index) {
+    if (isTransitioning) return;
+    isTransitioning = true;
+
+    // Chuẩn hóa index vòng lặp (wrap-around)
+    if (index < 0) {
+      currentIndex = totalSlides - 1;
+    } else if (index >= totalSlides) {
+      currentIndex = 0;
+    } else {
+      currentIndex = index;
+    }
+
+    // Dịch chuyển track theo phần trăm
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+    // Cập nhật trạng thái active cho slide
+    slides.forEach((slide, idx) => {
+      if (idx === currentIndex) {
+        slide.classList.add('testimonial__slide--active');
+        slide.setAttribute('aria-hidden', 'false');
+      } else {
+        slide.classList.remove('testimonial__slide--active');
+        slide.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    // Cập nhật trạng thái active cho dots
+    dots.forEach((dot, idx) => {
+      if (idx === currentIndex) {
+        dot.classList.add('active');
+        dot.setAttribute('aria-current', 'true');
+      } else {
+        dot.classList.remove('active');
+        dot.removeAttribute('aria-current');
+      }
+    });
+
+    setTimeout(() => {
+      isTransitioning = false;
+    }, 520);
+  }
+
+  // Sự kiện nút Prev & Next
+  prevBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    restartAutoPlay();
+    goToSlide(currentIndex - 1);
+  });
+
+  nextBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    restartAutoPlay();
+    goToSlide(currentIndex + 1);
+  });
+
+  // Sự kiện click Dots
+  dots.forEach((dot, idx) => {
+    dot.addEventListener('click', (e) => {
+      e.preventDefault();
+      restartAutoPlay();
+      goToSlide(idx);
+    });
+  });
+
+  // Hỗ trợ điều khiển bằng bàn phím (Phím mũi tên trái/phải)
+  slider.setAttribute('tabindex', '0');
+  slider.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      restartAutoPlay();
+      goToSlide(currentIndex - 1);
+    } else if (e.key === 'ArrowRight') {
+      restartAutoPlay();
+      goToSlide(currentIndex + 1);
+    }
+  });
+
+  // Hỗ trợ cảm ứng vuốt (Swipe Touch) trên điện thoại
+  let startX = 0;
+  let moveX = 0;
+
+  slider.addEventListener('touchstart', (e) => {
+    stopAutoPlay();
+    startX = e.touches[0].clientX;
+    moveX = startX;
+  }, { passive: true });
+
+  slider.addEventListener('touchmove', (e) => {
+    moveX = e.touches[0].clientX;
+  }, { passive: true });
+
+  slider.addEventListener('touchend', () => {
+    const diffX = startX - moveX;
+    if (Math.abs(diffX) > 40) {
+      if (diffX > 0) {
+        goToSlide(currentIndex + 1); // Vuốt sang trái -> xem slide kế tiếp
+      } else {
+        goToSlide(currentIndex - 1); // Vuốt sang phải -> xem slide trước đó
+      }
+    }
+    startAutoPlay();
+  });
+
+  // Tự động chuyển slide mỗi 6 giây (Tự tạm dừng khi rê chuột)
+  function startAutoPlay() {
+    stopAutoPlay();
+    autoPlayTimer = setInterval(() => {
+      goToSlide(currentIndex + 1);
+    }, 6000);
+  }
+
+  function stopAutoPlay() {
+    if (autoPlayTimer) {
+      clearInterval(autoPlayTimer);
+      autoPlayTimer = null;
+    }
+  }
+
+  function restartAutoPlay() {
+    stopAutoPlay();
+    startAutoPlay();
+  }
+
+  slider.addEventListener('mouseenter', stopAutoPlay);
+  slider.addEventListener('mouseleave', startAutoPlay);
+
+  // Khởi động trạng thái và autoplay ban đầu
+  goToSlide(0);
+  startAutoPlay();
+}
+

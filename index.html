@@ -740,52 +740,141 @@
         </div>
 
         <div class="testimonial__wrapper">
-          <!-- Left Arrow -->
-          <button class="testimonial__nav-btn testimonial__nav-btn--prev" aria-label="Previous Testimonial">
+          <!-- Left Arrow (Prev Button) -->
+          <button type="button" class="testimonial__nav-btn testimonial__nav-btn--prev" id="testimonialPrevBtn" aria-label="Previous Testimonial">
             <img src="./assets/icons/arrow-right-1.png" alt="Previous" class="testimonial__nav-icon">
           </button>
 
-          <div class="testimonial__card-grid">
-            <!-- Left: Customer Visual with Orange Offset Accent -->
-            <div class="testimonial__visual">
-              <div class="testimonial__accent-box"></div>
-              <div class="testimonial__image-box">
-                <img src="./assets/images/customer-portrait.jpg" alt="Yunus Seyhan - Postgraduate Student"
-                  class="testimonial__img" loading="lazy">
-              </div>
-            </div>
+          <!-- Testimonial Slider Viewport -->
+          <div class="testimonial__slider" id="testimonialSlider">
+            <div class="testimonial__track" id="testimonialTrack">
 
-            <!-- Right: Quote Content -->
-            <div class="testimonial__content">
-              <!-- Big Quotation Mark -->
-              <div class="testimonial__quote-mark">
-                <svg viewBox="0 0 60 48" fill="#FF5A3C">
-                  <path
-                    d="M0 28.8C0 12.89 10.29 0 25.71 0v11.52C16.8 11.52 13.71 18.24 13.71 23.04H25.71V48H0V28.8zm34.29 0C34.29 12.89 44.57 0 60 0v11.52c-8.91 0-12 6.72-12 11.52H60V48H34.29V28.8z" />
-                </svg>
+              <!-- Slide 1: Yunus Seyhan -->
+              <div class="testimonial__card-grid testimonial__slide testimonial__slide--active" data-slide="0">
+                <!-- Left: Customer Visual with Orange Offset Accent -->
+                <div class="testimonial__visual">
+                  <div class="testimonial__accent-box"></div>
+                  <div class="testimonial__image-box">
+                    <img src="./assets/images/customer-portrait.jpg" alt="Yunus Seyhan - Postgraduate Student"
+                      class="testimonial__img" loading="lazy">
+                  </div>
+                </div>
+
+                <!-- Right: Quote Content -->
+                <div class="testimonial__content">
+                  <!-- Big Quotation Mark -->
+                  <div class="testimonial__quote-mark">
+                    <svg viewBox="0 0 60 48" fill="#FF5A3C">
+                      <path
+                        d="M0 28.8C0 12.89 10.29 0 25.71 0v11.52C16.8 11.52 13.71 18.24 13.71 23.04H25.71V48H0V28.8zm34.29 0C34.29 12.89 44.57 0 60 0v11.52c-8.91 0-12 6.72-12 11.52H60V48H34.29V28.8z" />
+                    </svg>
+                  </div>
+
+                  <blockquote class="testimonial__quote">
+                    We make sure you have a fine distance with the sickness. We make you never lose hope. We make sure you
+                    have with the sickness.
+                  </blockquote>
+
+                  <!-- 5 Stars Rating -->
+                  <div class="star-rating">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                  </div>
+
+                  <div class="testimonial__author">
+                    <h3 class="testimonial__author-name">Yunus Seyhan</h3>
+                    <p class="testimonial__author-role">Postgraduate Student</p>
+                  </div>
+                </div>
               </div>
 
-              <blockquote class="testimonial__quote">
-                We make sure you have a fine distance with the sickness. We make you never lose hope. We make sure you
-                have with the sickness.
-              </blockquote>
+              <!-- Slide 2: Sarah Jenkins -->
+              <div class="testimonial__card-grid testimonial__slide" data-slide="1">
+                <!-- Left: Customer Visual with Orange Offset Accent -->
+                <div class="testimonial__visual">
+                  <div class="testimonial__accent-box"></div>
+                  <div class="testimonial__image-box">
+                    <img src="./assets/images/customer-portrait-2.jpg" alt="Sarah Jenkins - Senior Investment Consultant"
+                      class="testimonial__img" loading="lazy">
+                  </div>
+                </div>
 
-              <!-- 5 Stars Rating -->
-              <div class="star-rating">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                <!-- Right: Quote Content -->
+                <div class="testimonial__content">
+                  <!-- Big Quotation Mark -->
+                  <div class="testimonial__quote-mark">
+                    <svg viewBox="0 0 60 48" fill="#FF5A3C">
+                      <path
+                        d="M0 28.8C0 12.89 10.29 0 25.71 0v11.52C16.8 11.52 13.71 18.24 13.71 23.04H25.71V48H0V28.8zm34.29 0C34.29 12.89 44.57 0 60 0v11.52c-8.91 0-12 6.72-12 11.52H60V48H34.29V28.8z" />
+                    </svg>
+                  </div>
+
+                  <blockquote class="testimonial__quote">
+                    Reanty made finding our dream waterfront residence an absolute joy. The clarity in documentation, pricing transparency, and fast tour scheduling was truly unmatched.
+                  </blockquote>
+
+                  <!-- 5 Stars Rating -->
+                  <div class="star-rating">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                  </div>
+
+                  <div class="testimonial__author">
+                    <h3 class="testimonial__author-name">Sarah Jenkins</h3>
+                    <p class="testimonial__author-role">Senior Investment Consultant</p>
+                  </div>
+                </div>
               </div>
 
-              <div class="testimonial__author">
-                <h3 class="testimonial__author-name">Yunus Seyhan</h3>
-                <p class="testimonial__author-role">Postgraduate Student</p>
+              <!-- Slide 3: David Sterling -->
+              <div class="testimonial__card-grid testimonial__slide" data-slide="2">
+                <!-- Left: Customer Visual with Orange Offset Accent -->
+                <div class="testimonial__visual">
+                  <div class="testimonial__accent-box"></div>
+                  <div class="testimonial__image-box">
+                    <img src="./assets/images/customer-portrait-3.jpg" alt="David Sterling - Senior Urban Architect"
+                      class="testimonial__img" loading="lazy">
+                  </div>
+                </div>
+
+                <!-- Right: Quote Content -->
+                <div class="testimonial__content">
+                  <!-- Big Quotation Mark -->
+                  <div class="testimonial__quote-mark">
+                    <svg viewBox="0 0 60 48" fill="#FF5A3C">
+                      <path
+                        d="M0 28.8C0 12.89 10.29 0 25.71 0v11.52C16.8 11.52 13.71 18.24 13.71 23.04H25.71V48H0V28.8zm34.29 0C34.29 12.89 44.57 0 60 0v11.52c-8.91 0-12 6.72-12 11.52H60V48H34.29V28.8z" />
+                    </svg>
+                  </div>
+
+                  <blockquote class="testimonial__quote">
+                    As an architect, structural integrity and accurate floor planning mean everything. Reanty provided detailed property specifications that exceeded all my professional expectations.
+                  </blockquote>
+
+                  <!-- 5 Stars Rating -->
+                  <div class="star-rating">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                  </div>
+
+                  <div class="testimonial__author">
+                    <h3 class="testimonial__author-name">David Sterling</h3>
+                    <p class="testimonial__author-role">Senior Urban Architect</p>
+                  </div>
+                </div>
               </div>
+
             </div>
           </div>
 
-          <!-- Right Arrow (Active Orange) -->
-          <button class="testimonial__nav-btn testimonial__nav-btn--next active" aria-label="Next Testimonial">
+          <!-- Right Arrow (Next Button) -->
+          <button type="button" class="testimonial__nav-btn testimonial__nav-btn--next active" id="testimonialNextBtn" aria-label="Next Testimonial">
             <img src="./assets/icons/arrow-right.png" alt="Next" class="testimonial__nav-icon">
           </button>
+        </div>
+
+        <!-- Pagination Dots -->
+        <div class="testimonial__dots" id="testimonialDots">
+          <button type="button" class="testimonial__dot active" data-slide-index="0" aria-label="Slide 1: Yunus Seyhan"></button>
+          <button type="button" class="testimonial__dot" data-slide-index="1" aria-label="Slide 2: Sarah Jenkins"></button>
+          <button type="button" class="testimonial__dot" data-slide-index="2" aria-label="Slide 3: David Sterling"></button>
         </div>
       </div>
     </section>
