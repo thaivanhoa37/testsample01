@@ -243,11 +243,13 @@ const FALLBACK_FOOTER = `<footer class="footer">
    ========================================================================== */
 function initApp() {
   loadComponents();
+  initStickyHeader();
+  initBackToTop();
+  initNavigation();
   initPasswordToggles();
-  initLoginForm();
-  initRegisterForm();
-  initOtherForms();
+  initFormValidation();
   initHeroInteractions();
+  initVideoModal();
 }
 
 if (document.readyState === 'loading') {
@@ -267,6 +269,8 @@ async function loadComponents() {
 
   if (includes.length === 0) {
     initNavigation();
+    initStickyHeader();
+    initFormValidation();
     return;
   }
 
@@ -300,18 +304,14 @@ async function loadComponents() {
 
     // Chuẩn hóa đường dẫn tương đối tùy theo vị trí trang hiện tại
     if (isSubpage) {
-      // ./pages/abc.html -> ./abc.html
       html = html.replace(/href=["']\.\/pages\/([^"']+)["']/g, 'href="./$1"');
-      // ./index.html -> ../index.html
       html = html.replace(/href=["']\.\/index\.html([^"']*)["']/g, 'href="../index.html$1"');
     } else {
-      // Đang ở thư mục root (index.html)
       html = html.replace(/href=["']\.\.\/index\.html([^"']*)["']/g, 'href="./index.html$1"');
       html = html.replace(/href=["']\.\/login\.html["']/g, 'href="./pages/login.html"');
       html = html.replace(/href=["']\.\/register\.html["']/g, 'href="./pages/register.html"');
     }
 
-    // Tạo phần tử tạm để chứa HTML và xử lý active states
     const temp = document.createElement('div');
     temp.innerHTML = html;
 
@@ -336,17 +336,20 @@ async function loadComponents() {
       }
     }
 
-    // Thay thế placeholder bằng nội dung component
     el.outerHTML = temp.innerHTML;
   }
 
-  // Khởi tạo lại menu navigation và các form sau khi nạp xong header & footer
+  // Tái khởi tạo các tương tác phụ thuộc vào Header và Footer đã load
   initNavigation();
-  initOtherForms();
+  initStickyHeader();
+  initFormValidation();
 }
 
 /**
- * Quản lý Navigation Menu trên Mobile
+ * 1. QUẢN LÝ MENU MOBILE (HAMBURGER MENU)
+ * - Mở/Đóng menu khi nhấn nút 3 gạch
+ * - Đóng khi bấm ra ngoài hoặc click vào link điều hướng
+ * - Hỗ trợ phím Escape & tự đóng khi phóng to màn hình desktop
  */
 function initNavigation() {
   const menuToggle = document.getElementById('menuToggle');
@@ -354,39 +357,137 @@ function initNavigation() {
 
   if (!menuToggle || !navbarNav) return;
 
-  // Tránh gán đè nhiều lần
   if (menuToggle.dataset.listenerBound === 'true') return;
   menuToggle.dataset.listenerBound = 'true';
 
+  function closeMenu() {
+    navbarNav.classList.remove('navbar__nav--open');
+    menuToggle.classList.remove('navbar__toggle--active');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+
+  function openMenu() {
+    navbarNav.classList.add('navbar__nav--open');
+    menuToggle.classList.add('navbar__toggle--active');
+    menuToggle.setAttribute('aria-expanded', 'true');
+  }
+
   menuToggle.addEventListener('click', (e) => {
     e.stopPropagation();
-    const isOpen = navbarNav.classList.toggle('navbar__nav--open');
-    menuToggle.classList.toggle('navbar__toggle--active');
-    menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    const isOpen = navbarNav.classList.contains('navbar__nav--open');
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
   });
 
+  // Đóng khi click ngoài menu
   document.addEventListener('click', (e) => {
     if (navbarNav.classList.contains('navbar__nav--open')) {
       if (!navbarNav.contains(e.target) && !menuToggle.contains(e.target)) {
-        navbarNav.classList.remove('navbar__nav--open');
-        menuToggle.classList.remove('navbar__toggle--active');
-        menuToggle.setAttribute('aria-expanded', 'false');
+        closeMenu();
       }
     }
   });
 
-  const navLinks = navbarNav.querySelectorAll('.navbar__link');
+  // Đóng khi bấm phím Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navbarNav.classList.contains('navbar__nav--open')) {
+      closeMenu();
+    }
+  });
+
+  // Đóng khi click vào bất kỳ link nào trong menu
+  const navLinks = navbarNav.querySelectorAll('.navbar__link, .navbar__login, .navbar__btn');
   navLinks.forEach((link) => {
     link.addEventListener('click', () => {
-      navbarNav.classList.remove('navbar__nav--open');
-      menuToggle.classList.remove('navbar__toggle--active');
-      menuToggle.setAttribute('aria-expanded', 'false');
+      closeMenu();
     });
+  });
+
+  // Tự động đóng nếu resize lên kích thước desktop (> 992px)
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 992 && navbarNav.classList.contains('navbar__nav--open')) {
+      closeMenu();
+    }
   });
 }
 
 /**
- * Ẩn / Hiện Mật Khẩu
+ * 2. HIỆU ỨNG CUỘN GIAO DIỆN: HEADER ĐỔI MÀU (STICKY & GLASSMORPHISM)
+ */
+function initStickyHeader() {
+  const navbar = document.querySelector('.navbar');
+  if (!navbar) return;
+
+  navbar.classList.add('navbar--sticky');
+
+  let ticking = false;
+  function handleScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('navbar--scrolled');
+        } else {
+          navbar.classList.remove('navbar--scrolled');
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+}
+
+/**
+ * 3. NÚT QUAY LẠI ĐẦU TRANG (BACK TO TOP)
+ */
+function initBackToTop() {
+  let btn = document.getElementById('backToTop');
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.id = 'backToTop';
+    btn.className = 'back-to-top';
+    btn.setAttribute('aria-label', 'Quay lại đầu trang');
+    btn.setAttribute('title', 'Quay lại đầu trang');
+    btn.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"></polyline>
+      </svg>
+    `;
+    document.body.appendChild(btn);
+  }
+
+  let ticking = false;
+  function checkScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        if (window.scrollY > 300) {
+          btn.classList.add('back-to-top--visible');
+        } else {
+          btn.classList.remove('back-to-top--visible');
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', checkScroll, { passive: true });
+  checkScroll();
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+/**
+ * 4. ẨN / HIỆN MẬT KHẨU (EYE ICON TOGGLE)
+ * - Đổi type text/password
+ * - Cập nhật icon mắt mở 👁️ sang mắt gạch chéo 👁️‍🗨️ và ngược lại
  */
 function initPasswordToggles() {
   const toggleButtons = document.querySelectorAll('.password-toggle');
@@ -395,20 +496,22 @@ function initPasswordToggles() {
     btn.dataset.listenerBound = 'true';
 
     btn.addEventListener('click', () => {
-      const wrapper = btn.closest('.form-input-wrapper');
+      const wrapper = btn.closest('.form-input-wrapper') || btn.parentElement;
       if (!wrapper) return;
       const input = wrapper.querySelector('input');
       if (!input) return;
 
       const isPassword = input.type === 'password';
       input.type = isPassword ? 'text' : 'password';
+      btn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+      btn.setAttribute('title', isPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
 
       btn.innerHTML = isPassword
-        ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
             <line x1="1" y1="1" x2="23" y2="23"></line>
           </svg>`
-        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
             <circle cx="12" cy="12" r="3"></circle>
           </svg>`;
@@ -417,148 +520,332 @@ function initPasswordToggles() {
 }
 
 /**
- * Xử lý Submit Form Đăng Nhập
+ * CÁC HÀM TIỆN ÍCH XÁC THỰC FORM (FORM VALIDATION UTILITIES)
  */
-function initLoginForm() {
+function showFieldError(input, message) {
+  const wrapper = input.closest('.form-input-wrapper') || input.parentElement;
+  const group = input.closest('.form-group') || wrapper;
+
+  input.classList.add('form-input--error');
+  if (wrapper) wrapper.classList.add('form-input-wrapper--error');
+
+  // Xóa thông báo lỗi cũ nếu có
+  clearFieldError(input);
+
+  const errorEl = document.createElement('div');
+  errorEl.className = 'form-field-error';
+  errorEl.innerHTML = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"></circle>
+      <line x1="12" y1="8" x2="12" y2="12"></line>
+      <line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
+    <span>${message}</span>
+  `;
+
+  if (wrapper && wrapper.parentElement) {
+    wrapper.after(errorEl);
+  } else if (input.parentElement) {
+    input.after(errorEl);
+  }
+
+  if (group) {
+    group.classList.remove('form-group--shake');
+    void group.offsetWidth; // Force reflow
+    group.classList.add('form-group--shake');
+  }
+}
+
+function clearFieldError(input) {
+  const wrapper = input.closest('.form-input-wrapper') || input.parentElement;
+  const group = input.closest('.form-group') || wrapper;
+
+  input.classList.remove('form-input--error');
+  if (wrapper) wrapper.classList.remove('form-input-wrapper--error');
+  if (group) group.classList.remove('form-group--shake');
+
+  let parent = wrapper ? wrapper.parentElement : input.parentElement;
+  if (parent) {
+    const errorEl = parent.querySelector('.form-field-error');
+    if (errorEl) errorEl.remove();
+  }
+}
+
+function showToast(message, type = 'success') {
+  let toast = document.getElementById('appToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'appToast';
+    toast.className = 'toast-notification';
+    document.body.appendChild(toast);
+  }
+
+  const iconSuccess = `<svg class="toast-notification__icon" viewBox="0 0 24 24" fill="none" stroke="#0E8048" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`;
+  const iconError = `<svg class="toast-notification__icon" viewBox="0 0 24 24" fill="none" stroke="#FF5A3C" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>`;
+
+  toast.className = `toast-notification toast-notification--${type}`;
+  toast.innerHTML = `
+    ${type === 'success' ? iconSuccess : iconError}
+    <span class="toast-notification__message">${message}</span>
+  `;
+
+  requestAnimationFrame(() => {
+    toast.classList.add('toast-notification--show');
+  });
+
+  clearTimeout(toast._timeout);
+  toast._timeout = setTimeout(() => {
+    toast.classList.remove('toast-notification--show');
+  }, 3500);
+}
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/**
+ * 5. TÍNH NĂNG XÁC THỰC FORM (FORM VALIDATION TOÀN BỘ TRANG)
+ * - Trang Đăng nhập (Email, Mật khẩu)
+ * - Trang Đăng ký (Họ tên, Email, Mật khẩu, Xác nhận mật khẩu, Điều khoản)
+ * - Form Liên hệ Contact & Newsletter
+ */
+function initFormValidation() {
+  // A. XÁC THỰC FORM ĐĂNG NHẬP
   const loginForm = document.getElementById('loginForm');
-  const loginSuccessAlert = document.getElementById('loginSuccessAlert');
-
-  if (!loginForm || loginForm.dataset.listenerBound === 'true') return;
-  loginForm.dataset.listenerBound = 'true';
-
-  loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+  if (loginForm && loginForm.dataset.validationBound !== 'true') {
+    loginForm.dataset.validationBound = 'true';
+    loginForm.setAttribute('novalidate', 'true');
 
     const emailInput = document.getElementById('loginEmail');
     const passwordInput = document.getElementById('loginPassword');
+    const loginSuccessAlert = document.getElementById('loginSuccessAlert');
 
-    if (!emailInput || !passwordInput) return;
+    [emailInput, passwordInput].forEach((inp) => {
+      if (inp) {
+        inp.addEventListener('input', () => clearFieldError(inp));
+      }
+    });
 
-    const targetEndpoint =
-      loginForm.dataset.dataServerUrl ||
-      loginForm.dataset.testServerUrl ||
-      'https://api.reanty.com/api/v1/auth/login';
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let isValid = true;
 
-    console.log('--- [AUTH LOGIN SUBMISSION] ---');
-    console.log('Target Server Endpoint:', targetEndpoint);
-    console.log('Email:', emailInput.value.trim());
+      if (!emailInput.value.trim()) {
+        showFieldError(emailInput, 'Vui lòng nhập địa chỉ email hoặc tên người dùng.');
+        isValid = false;
+      } else if (!EMAIL_REGEX.test(emailInput.value.trim())) {
+        showFieldError(emailInput, 'Định dạng email không hợp lệ (ví dụ: name@example.com).');
+        isValid = false;
+      }
 
-    if (loginSuccessAlert) {
-      loginSuccessAlert.style.display = 'flex';
+      if (!passwordInput.value) {
+        showFieldError(passwordInput, 'Vui lòng nhập mật khẩu tài khoản.');
+        isValid = false;
+      } else if (passwordInput.value.length < 6) {
+        showFieldError(passwordInput, 'Mật khẩu phải chứa tối thiểu 6 ký tự.');
+        isValid = false;
+      }
+
+      if (!isValid) return;
+
+      if (loginSuccessAlert) {
+        loginSuccessAlert.style.display = 'flex';
+      }
       const submitBtn = loginForm.querySelector('.auth-submit-btn');
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.style.opacity = '0.7';
-        submitBtn.innerHTML = `<span>Signing in...</span>`;
+        submitBtn.innerHTML = `<span>Đang đăng nhập...</span>`;
       }
+      showToast('Đăng nhập thành công! Đang chuyển hướng...', 'success');
+
       setTimeout(() => {
         const isSubpage =
           window.location.pathname.includes('/pages/') ||
           window.location.pathname.includes('\\pages\\');
         window.location.href = isSubpage ? '../index.html' : './index.html';
       }, 1200);
-    }
-  });
-}
+    });
+  }
 
-/**
- * Xử lý Submit Form Đăng Ký
- */
-function initRegisterForm() {
+  // B. XÁC THỰC FORM ĐĂNG KÝ
   const registerForm = document.getElementById('registerForm');
-  const registerSuccessAlert = document.getElementById('registerSuccessAlert');
-  const registerErrorAlert = document.getElementById('registerErrorAlert');
-  const registerErrorMessage = document.getElementById('registerErrorMessage');
-
-  if (!registerForm || registerForm.dataset.listenerBound === 'true') return;
-  registerForm.dataset.listenerBound = 'true';
-
-  registerForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+  if (registerForm && registerForm.dataset.validationBound !== 'true') {
+    registerForm.dataset.validationBound = 'true';
+    registerForm.setAttribute('novalidate', 'true');
 
     const nameInput = document.getElementById('regName');
     const emailInput = document.getElementById('regEmail');
     const passInput = document.getElementById('regPassword');
     const confirmPassInput = document.getElementById('regConfirmPassword');
+    const agreeTerms = document.getElementById('agreeTerms');
+    const registerSuccessAlert = document.getElementById('registerSuccessAlert');
+    const registerErrorAlert = document.getElementById('registerErrorAlert');
+    const registerErrorMessage = document.getElementById('registerErrorMessage');
 
-    if (!nameInput || !emailInput || !passInput || !confirmPassInput) return;
-
-    if (registerErrorAlert) registerErrorAlert.style.display = 'none';
-    if (registerSuccessAlert) registerSuccessAlert.style.display = 'none';
-
-    if (passInput.value.length < 8) {
-      if (registerErrorAlert && registerErrorMessage) {
-        registerErrorMessage.textContent = 'Mật khẩu phải có tối thiểu 8 ký tự.';
-        registerErrorAlert.style.display = 'flex';
-        passInput.focus();
+    [nameInput, emailInput, passInput, confirmPassInput].forEach((inp) => {
+      if (inp) {
+        inp.addEventListener('input', () => clearFieldError(inp));
       }
-      return;
+    });
+
+    if (agreeTerms) {
+      agreeTerms.addEventListener('change', () => clearFieldError(agreeTerms));
     }
 
-    if (passInput.value !== confirmPassInput.value) {
-      if (registerErrorAlert && registerErrorMessage) {
-        registerErrorMessage.textContent = 'Mật khẩu xác nhận không trùng khớp. Vui lòng thử lại!';
-        registerErrorAlert.style.display = 'flex';
-        confirmPassInput.focus();
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let isValid = true;
+
+      if (!nameInput.value.trim()) {
+        showFieldError(nameInput, 'Vui lòng nhập họ và tên của bạn.');
+        isValid = false;
+      } else if (nameInput.value.trim().length < 2) {
+        showFieldError(nameInput, 'Họ và tên phải có tối thiểu 2 ký tự.');
+        isValid = false;
       }
-      return;
-    }
 
-    const targetEndpoint =
-      registerForm.dataset.dataServerUrl ||
-      registerForm.dataset.testServerUrl ||
-      'https://api.reanty.com/api/v1/auth/register';
+      if (!emailInput.value.trim()) {
+        showFieldError(emailInput, 'Vui lòng nhập địa chỉ email.');
+        isValid = false;
+      } else if (!EMAIL_REGEX.test(emailInput.value.trim())) {
+        showFieldError(emailInput, 'Địa chỉ email không hợp lệ (ví dụ: name@example.com).');
+        isValid = false;
+      }
 
-    console.log('--- [AUTH REGISTER SUBMISSION] ---');
-    console.log('Target Server Endpoint:', targetEndpoint);
-    console.log('Name:', nameInput.value.trim());
-    console.log('Email:', emailInput.value.trim());
+      if (!passInput.value) {
+        showFieldError(passInput, 'Vui lòng tạo mật khẩu bảo vệ tài khoản.');
+        isValid = false;
+      } else if (passInput.value.length < 8) {
+        showFieldError(passInput, 'Mật khẩu phải chứa ít nhất 8 ký tự.');
+        isValid = false;
+      }
 
-    if (registerSuccessAlert) {
-      registerSuccessAlert.style.display = 'flex';
+      if (!confirmPassInput.value) {
+        showFieldError(confirmPassInput, 'Vui lòng nhập lại mật khẩu xác nhận.');
+        isValid = false;
+      } else if (passInput.value !== confirmPassInput.value) {
+        showFieldError(confirmPassInput, 'Mật khẩu xác nhận không trùng khớp.');
+        isValid = false;
+      }
+
+      if (agreeTerms && !agreeTerms.checked) {
+        showFieldError(agreeTerms, 'Bạn cần đồng ý với Điều khoản và Chính sách để tiếp tục.');
+        isValid = false;
+      }
+
+      if (!isValid) {
+        if (registerErrorAlert && registerErrorMessage) {
+          registerErrorMessage.textContent = 'Vui lòng kiểm tra và sửa các thông tin chưa chính xác.';
+          registerErrorAlert.style.display = 'flex';
+        }
+        return;
+      }
+
+      if (registerErrorAlert) registerErrorAlert.style.display = 'none';
+      if (registerSuccessAlert) registerSuccessAlert.style.display = 'flex';
+
       const submitBtn = registerForm.querySelector('.auth-submit-btn');
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.style.opacity = '0.7';
-        submitBtn.innerHTML = `<span>Creating account...</span>`;
+        submitBtn.innerHTML = `<span>Đang khởi tạo tài khoản...</span>`;
       }
+      showToast('Đăng ký tài khoản thành công! Đang chuyển đến trang đăng nhập...', 'success');
+
       setTimeout(() => {
         window.location.href = './login.html';
-      }, 1200);
-    }
-  });
-}
+      }, 1400);
+    });
+  }
 
-/**
- * Xử lý các Form Liên hệ & Newsletter
- */
-function initOtherForms() {
-  const otherForms = document.querySelectorAll(
-    '.contact-form, .newsletter-bar__form, .footer__newsletter'
-  );
-  otherForms.forEach((form) => {
-    if (form.dataset.listenerBound === 'true') return;
-    form.dataset.listenerBound = 'true';
+  // C. XÁC THỰC FORM LIÊN HỆ (CONTACT FORM)
+  const contactForms = document.querySelectorAll('.contact-form');
+  contactForms.forEach((form) => {
+    if (form.dataset.validationBound === 'true') return;
+    form.dataset.validationBound = 'true';
+    form.setAttribute('novalidate', 'true');
+
+    const nameInp = form.querySelector('#contactName, input[name="name"], input[placeholder*="name" i]');
+    const emailInp = form.querySelector('#contactEmail, input[name="email"], input[placeholder*="email" i]');
+    const msgInp = form.querySelector('#contactMessage, textarea');
+
+    [nameInp, emailInp, msgInp].forEach((inp) => {
+      if (inp) {
+        inp.addEventListener('input', () => clearFieldError(inp));
+      }
+    });
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      let isValid = true;
+
+      if (nameInp && !nameInp.value.trim()) {
+        showFieldError(nameInp, 'Vui lòng nhập họ và tên của bạn.');
+        isValid = false;
+      }
+
+      if (emailInp) {
+        if (!emailInp.value.trim()) {
+          showFieldError(emailInp, 'Vui lòng cung cấp địa chỉ email liên hệ.');
+          isValid = false;
+        } else if (!EMAIL_REGEX.test(emailInp.value.trim())) {
+          showFieldError(emailInp, 'Địa chỉ email không đúng định dạng.');
+          isValid = false;
+        }
+      }
+
+      if (msgInp && !msgInp.value.trim()) {
+        showFieldError(msgInp, 'Vui lòng nhập nội dung tin nhắn cần tư vấn.');
+        isValid = false;
+      }
+
+      if (!isValid) return;
+
       const btn = form.querySelector('button[type="submit"]');
       if (btn) {
         const originalText = btn.innerHTML;
-        btn.innerHTML = '<span>Done!</span>';
+        btn.innerHTML = '<span>Đã gửi thành công!</span>';
         btn.style.backgroundColor = '#0E8048';
+        showToast('Cảm ơn bạn! Yêu cầu tư vấn đã được gửi đến ban quản trị Reanty.', 'success');
         setTimeout(() => {
           btn.innerHTML = originalText;
           btn.style.backgroundColor = '';
           form.reset();
-        }, 2000);
+        }, 2500);
       }
+    });
+  });
+
+  // D. XÁC THỰC NEWSLETTER FORM
+  const newsletterForms = document.querySelectorAll('.footer__newsletter, .newsletter-bar__form');
+  newsletterForms.forEach((form) => {
+    if (form.dataset.validationBound === 'true') return;
+    form.dataset.validationBound = 'true';
+    form.setAttribute('novalidate', 'true');
+
+    const emailInp = form.querySelector('input[type="email"]');
+    if (emailInp) {
+      emailInp.addEventListener('input', () => clearFieldError(emailInp));
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!emailInp || !emailInp.value.trim()) {
+        if (emailInp) showFieldError(emailInp, 'Vui lòng nhập địa chỉ email nhận tin.');
+        return;
+      }
+      if (!EMAIL_REGEX.test(emailInp.value.trim())) {
+        showFieldError(emailInp, 'Email nhận tin không hợp lệ.');
+        return;
+      }
+
+      showToast('Đăng ký nhận bản tin thị trường thành công!', 'success');
+      form.reset();
     });
   });
 }
 
 /**
- * Xử lý tương tác Stepped Tabs & Pagination (HOUSE 1, HOUSE 2, HOUSE 3) trong Hero Section
+ * 6. CHUYỂN ĐỔI TAB BẬC THANG (STEPPED TABS: HOUSE 1, 2, 3)
  */
 function initHeroInteractions() {
   const tabs = document.querySelectorAll('#heroHouseTabs .hero__tab-step');
@@ -599,5 +886,79 @@ function initHeroInteractions() {
     num.addEventListener('click', () => {
       setActiveStep(index);
     });
+  });
+}
+
+/**
+ * 7. MODAL VIDEO POPUP ("HOW IT WORKS")
+ * - Bấm nút mở popup video demo
+ * - Nút đóng ✕, click backdrop hoặc bấm phím Escape để đóng
+ */
+function initVideoModal() {
+  let modal = document.getElementById('howItWorksModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'howItWorksModal';
+    modal.className = 'video-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-labelledby', 'videoModalTitle');
+    modal.innerHTML = `
+      <div class="video-modal__backdrop" id="videoModalBackdrop"></div>
+      <div class="video-modal__container">
+        <div class="video-modal__header">
+          <div class="video-modal__title" id="videoModalTitle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF5A3C" stroke-width="2.5">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span>How Reanty Platform Works - Video Guide</span>
+          </div>
+          <button type="button" class="video-modal__close" id="videoModalCloseBtn" aria-label="Close video modal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="video-modal__body">
+          <iframe id="videoModalIframe" src="about:blank" title="Reanty Introduction Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+
+  const iframe = modal.querySelector('#videoModalIframe');
+  const closeBtn = modal.querySelector('#videoModalCloseBtn');
+  const backdrop = modal.querySelector('#videoModalBackdrop');
+  const videoUrl = 'https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1&rel=0';
+
+  function openVideoModal(e) {
+    if (e) e.preventDefault();
+    if (iframe) iframe.src = videoUrl;
+    modal.classList.add('video-modal--open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeVideoModal() {
+    modal.classList.remove('video-modal--open');
+    if (iframe) iframe.src = 'about:blank';
+    document.body.style.overflow = '';
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closeVideoModal);
+  if (backdrop) backdrop.addEventListener('click', closeVideoModal);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('video-modal--open')) {
+      closeVideoModal();
+    }
+  });
+
+  const triggers = document.querySelectorAll(
+    '.hero__video-btn, a[href="#how-it-works"], [data-open-modal="how-it-works"]'
+  );
+  triggers.forEach((trigger) => {
+    trigger.addEventListener('click', openVideoModal);
   });
 }
